@@ -14,6 +14,9 @@ if (isset($_POST['submit'])) {
         $row = mysqli_fetch_array($result);
 
         if (is_array($row)) {
+            $check_restaurant = $db->query("SELECT * FROM restaurant WHERE user_id = " . (int) $_SESSION['user_id'] . "");
+            if (mysqli_num_rows($check_restaurant) > 0)
+                $_SESSION['rs_id'] = mysqli_fetch_assoc($check_restaurant)['rs_id'];
             $_SESSION["user_id"] = $row['u_id'];
             $_SESSION['user_role'] = $row['role'];
             if ($row['role'] === 'shop') {

@@ -58,7 +58,7 @@ include 'parts/start.php';
             while ($r = mysqli_fetch_array($query_res)) {
                 echo '<div class="col-xs-12 col-sm-6 col-md-4 food-item">
                         <div class="food-item-wrap">
-                            <div class="figure-wrap bg-image" data-image-src="admin/Res_img/dishes/' . $r['img'] . '"></div>
+                            <div class="figure-wrap bg-image" data-image-src="/zerowaste/uploads/dishes/' . $r['img'] . '"></div>
                             <div class="content">
                                 <h5><a href="dishes.php?res_id=' . $r['rs_id'] . '">' . $r['title'] . '</a></h5>
                                 <div class="product-name">' . $r['slogan'] . '</div>
@@ -171,7 +171,7 @@ include 'parts/start.php';
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-3 col-md-12 col-lg-3 text-xs-center">
                                         <a class="restaurant-logo" href="dishes.php?res_id=' . $rows['rs_id'] . '"> 
-                                            <img src="admin/Res_img/' . $rows['image'] . '" alt="Restaurant logo"> 
+                                            <img src="/zerowaste/uploads/' . $rows['image'] . '" alt="Restaurant logo"> 
                                         </a>
                                     </div>
                                     <div class="col-xs-12 col-sm-9 col-md-12 col-lg-9">
