@@ -15,8 +15,11 @@ if (isset($_POST['submit'])) {
 
         if (is_array($row)) {
             $check_restaurant = $db->query("SELECT * FROM restaurant WHERE user_id = " . (int) $_SESSION['user_id'] . "");
-            if (mysqli_num_rows($check_restaurant) > 0)
-                $_SESSION['rs_id'] = mysqli_fetch_assoc($check_restaurant)['rs_id'];
+            if (mysqli_num_rows($check_restaurant) > 0) {
+                $res = mysqli_fetch_assoc($check_restaurant);
+                $_SESSION['rs_id'] = $res['rs_id'];
+                $_SESSION['rs_name'] = $res['title'];
+            }
             $_SESSION["user_id"] = $row['u_id'];
             $_SESSION['user_role'] = $row['role'];
             if ($row['role'] === 'shop') {
@@ -138,7 +141,7 @@ include 'parts/start.php';
         .login-container {
             padding: 30px 20px;
         }
-        
+
         .page-title {
             font-size: 24px;
         }
@@ -151,15 +154,15 @@ include 'parts/start.php';
             <div class="col-12">
                 <div class="login-container">
                     <h2 class="page-title">Login to Your Account</h2>
-                    
-                    <?php if(isset($message)) { ?>
+
+                    <?php if (isset($message)) { ?>
                         <div class="error-message"><?php echo $message; ?></div>
                     <?php } ?>
-                    
-                    <?php if(isset($success)) { ?>
+
+                    <?php if (isset($success)) { ?>
                         <div class="success-message"><?php echo $success; ?></div>
                     <?php } ?>
-                    
+
                     <form action="" method="post">
                         <div class="form-group">
                             <input type="text" class="form-control" name="username" placeholder="Username" required>

@@ -3,78 +3,211 @@
         <div class="col-12">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="d-flex justify-content-end w-100"
-                        style="display: flex;justify-content: end; align-items: center; padding: 10px">
+                    <div class="dish-head">
+                        <h3 class="dish-title">Dishes</h3>
 
-                        <h3 class="m-b-0 text-black w-100">All Menu</h3>
-                        <form action="" method="get" style="padding: 0 20px;">
-                            <input type="search" class=""
-                                style="border: none; background-color: #b7bdb8; padding: 8px 10px;" name="search"
-                                id="search" placeholder="Search..">
-                            <!-- <label for="search" style="border: none; background-color: #b7bdb8; padding: 8px 10px;"><i
-                                    class="fas fa-search text-primary"></i></label> -->
+                        <form action="" method="get" class="dish-search">
+                            <input type="search" name="search" id="search" placeholder="Search..."
+                                class="search-input" />
                         </form>
-                        <a href="shop.php?p=ad" class="btn btn-primary">
+
+                        <a href="shop.php?p=ad" class="btn btn-primary add-dish-btn">
                             <i class="fas fa-plus"></i> Add New Dish
                         </a>
                     </div>
                     <div class="table-responsive m-t-40">
-                        <table id="example23" class="display nowrap table table-hover table-striped table-bordered"
-                            cellspacing="0" width="100%">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <!-- <th>Restaurant</th> -->
-                                    <th>Dish</th>
-                                    <th>Description</th>
-                                    <th>Stocks</th>
-                                    <th>Image</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                if (isset($_GET['dd'])) {
-                                    $dID = (int) $_GET['dd'] ?? die("Required id");
-                                    $del_query = mysqli_prepare($db, "DELETE FROM dishes WHERE d_id = ?");
-                                    mysqli_stmt_bind_param($del_query, 'i', $dID);
-                                    $select_del_query = mysqli_prepare($db, "SELECT * FROM dishes WHERE d_id = ?");
-                                    mysqli_stmt_bind_param($select_del_query, 'i', $dID);
-                                    mysqli_execute($select_del_query);
-                                    $select_del_data = mysqli_fetch_assoc($select_del_query->get_result());
-                                    unlink(__DIR__.'/../uploads/dishes/'.$select_del_data['img'].'');
-                                    if (mysqli_execute($del_query)) {
-                                        echo "<script>alert('Successfully Deleted');</script>";
+                        <div class="dish-cards">
+                            <?php
+                            if (isset($_GET['dd'])) {
+                                $dID = (int) $_GET['dd'] ?? die("Required id");
+                                $del_query = mysqli_prepare($db, "DELETE FROM dishes WHERE d_id = ?");
+                                mysqli_stmt_bind_param($del_query, 'i', $dID);
+                                $select_del_query = mysqli_prepare($db, "SELECT * FROM dishes WHERE d_id = ?");
+                                mysqli_stmt_bind_param($select_del_query, 'i', $dID);
+                                mysqli_execute($select_del_query);
+                                $select_del_data = mysqli_fetch_assoc($select_del_query->get_result());
+                                unlink(__DIR__ . '/../uploads/dishes/' . $select_del_data['img'] . '');
+                                if (mysqli_execute($del_query)) {
+                                    echo "<script>alert('Successfully Deleted');</script>";
+                                }
+                            }
 
-                                    }
+                            $sql = "SELECT * FROM dishes WHERE rs_id = ? ORDER BY d_id DESC";
+                            $query = mysqli_prepare($db, $sql);
+                            mysqli_stmt_bind_param($query, 'i', $_SESSION['rs_id']);
+                            mysqli_execute($query);
+                            $query = $query->get_result();
+                            if (!mysqli_num_rows($query) > 0) {
+                                echo '<p class="no-data">No Menu</p>';
+                            } else {
+                                while ($rows = mysqli_fetch_array($query)) {
+                                    echo '<div class="dish-card">
+                    <img src="/zerowaste/uploads/dishes/' . $rows['img'] . '" alt="' . htmlspecialchars($rows['title']) . '" class="dish-image" />
+                    <div class="dish-info">
+                        <h3 class="dish-title">' . htmlspecialchars($rows['title']) . '</h3>
+                        <p class="dish-description">' . htmlspecialchars($rows['slogan']) . '</p>
+                        <p class="dish-stock"><strong>Stock:</strong> ' . $rows['stock'] . '</p>
+                        <div class="dish-actions">
+                            <a href="shop.php?p=ed&d_id=' . $rows['d_id'] . '" class="btn btn-edit"><i class="fa fa-edit"></i> Edit</a>
+                            <a href="shop.php?p=dishes&dd=' . $rows['d_id'] . '" class="btn btn-delete" onclick="return confirm(\'Are you sure you want to delete this dish?\')"><i class="fa fa-trash-o"></i> Delete</a>
+                        </div>
+                    </div>
+                </div>';
                                 }
-                                $sql = "SELECT * FROM dishes ORDER BY d_id DESC";
-                                $query = mysqli_query($db, $sql);
-                                if (!mysqli_num_rows($query) > 0) {
-                                    echo '<tr><td colspan="6"><center>No Menu</center></td></tr>';
-                                } else {
-                                    while ($rows = mysqli_fetch_array($query)) {
-                                        echo '<tr>
-                                                <td>' . $rows['title'] . '</td>
-                                                <td>' . $rows['slogan'] . '</td>
-                                                <td>' . $rows['stock'] . '</td>
-                                                <td>
-                                                    <div class="col-md-3 col-lg-8 m-b-10">
-                                                        <center><img src="/zerowaste/uploads/dishes/' . $rows['img'] . '" class="img-responsive radius" style="max-height:100px;max-width:150px;" /></center>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <a href="shop.php?p=dishes&dd=' . $rows['d_id'] . '" class="btn btn-danger"><i class="fa fa-trash-o" style="font-size:16px"></i></a> 
-                                                    <a href="shop.php?p=ed&d_id=' . $rows['d_id'] . '" class="btn btn-info"><i class="fa fa-edit"></i></a>
-                                                </td>
-                                            </tr>';
-                                    }
-                                }
-                                ?>
-                            </tbody>
-                        </table>
+                            }
+                            ?>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<style>
+    .dish-head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .dish-title {
+        flex: 1 1 100%;
+        font-size: 1.5rem;
+        margin: 0;
+        color: #000;
+    }
+
+    .dish-search {
+        flex: 1;
+        display: flex;
+        justify-content: flex-start;
+        max-width: 300px;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 8px 12px;
+        background-color: #b7bdb860;
+        border: none;
+        border-radius: 5px;
+    }
+
+    .add-dish-btn {
+        white-space: nowrap;
+        padding: 8px 12px;
+    }
+
+    @media (max-width: 768px) {
+        .dish-head {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .dish-title {
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .dish-search {
+            justify-content: center;
+            width: 100%;
+        }
+
+        .add-dish-btn {
+            width: 100%;
+            text-align: center;
+            justify-content: center;
+        }
+    }
+
+    .dish-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        padding: 1rem;
+    }
+
+    .dish-card {
+        background: #fff;
+        border: 1px solid #eee;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.2s ease;
+    }
+
+    .dish-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .dish-image {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-bottom: 1px solid #eee;
+    }
+
+    .dish-info {
+        padding: 1rem;
+    }
+
+    .dish-title {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        color: #333;
+    }
+
+    .dish-description {
+        color: #555;
+        font-size: 0.95rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .dish-stock {
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 1rem;
+    }
+
+    .dish-actions {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        padding: 0.4rem 0.75rem;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-size: 0.875rem;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .btn i {
+        margin-right: 5px;
+    }
+
+    .btn-edit {
+        background-color: #0d6efd;
+    }
+
+    .btn-delete {
+        background-color: #dc3545;
+    }
+
+    .no-data {
+        text-align: center;
+        padding: 2rem;
+        font-size: 1.2rem;
+        color: #777;
+    }
+</style>

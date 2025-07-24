@@ -68,6 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                         Restaurant added successfully!
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>';
+            header("refresh:1;url=shop.php");
+            exit;
         } else {
             $msg = '<div class="alert alert-danger alert-dismissible fade show" role="alert">
                         <i class="fas fa-exclamation-circle me-2"></i>
@@ -86,18 +88,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     }
 }
 ?>
-
-<div class="container mt-3">
+<div class="container <?= $msg ? 'mt-3' : '' ?>">
     <?= $msg ?>
 </div>
-
-
 <form action="" method="post" enctype="multipart/form-data" style="padding: 20px">
     <div class="alert alert-warning d-flex align-items-center" role="alert">
         <i class="fas fa-exclamation-triangle me-2"></i>
         <div>
-            You must <strong>create a restaurant</strong> before continuing.
-            <!-- <a href="add_restaurant.php" class="alert-link">Click here to add a restaurant.</a> -->
+            Please fill your <strong>restaurant</strong> informations to continue.
         </div>
     </div>
 
@@ -106,14 +104,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="control-label">Restaurant Name</label>
-                    <input type="text" name="res_name" class="form-control">
+                    <input type="text" name="res_name" class="form-control" required>
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group has-danger">
                     <label class="control-label">Business E-mail</label>
-                    <input type="text" name="email" class="form-control form-control-danger">
+                    <input type="text" name="email" class="form-control form-control-danger" required>
                 </div>
             </div>
         </div>
@@ -122,14 +120,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="control-label">Phone</label>
-                    <input type="text" name="phone" class="form-control">
+                    <input type="text" name="phone" class="form-control" required>
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group has-danger">
                     <label class="control-label">Website URL</label>
-                    <input type="text" name="url" class="form-control form-control-danger">
+                    <input type="text" name="url" class="form-control form-control-danger" required>
                 </div>
             </div>
         </div>
@@ -138,8 +136,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="control-label">Open Hours</label>
-                    <select name="o_hr" class="form-control custom-select">
-                        <option>--Select your Hours--</option>
+                    <select name="o_hr" class="form-control custom-select" required>
+                        <option selected disabled>--Select your Hours--</option>
                         <option value="6am">6am</option>
                         <option value="7am">7am</option>
                         <option value="8am">8am</option>
@@ -154,8 +152,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="control-label">Close Hours</label>
-                    <select name="c_hr" class="form-control custom-select">
-                        <option>--Select your Hours--</option>
+                    <select name="c_hr" class="form-control custom-select" required>
+                        <option selected disabled>--Select your Hours--</option>
                         <option value="3pm">3pm</option>
                         <option value="4pm">4pm</option>
                         <option value="5pm">5pm</option>
@@ -176,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="control-label">Open Days</label>
-                    <select name="o_days" class="form-control custom-select">
+                    <select name="o_days" class="form-control custom-select" required>
                         <option>--Select your Days--</option>
                         <option value="Mon-Tue">Mon-Tue</option>
                         <option value="Mon-Wed">Mon-Wed</option>
@@ -191,14 +189,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             <div class="col-md-6">
                 <div class="form-group has-danger">
                     <label class="control-label">Image</label>
-                    <input type="file" name="file" class="form-control form-control-danger">
+                    <input type="file" name="file" class="form-control form-control-danger" required>
                 </div>
             </div>
 
             <div class="col-md-12">
                 <div class="form-group">
                     <label class="control-label">Select Category</label>
-                    <select name="c_name" class="form-control custom-select">
+                    <select name="c_name" class="form-control custom-select" required>
                         <option>--Select Category--</option>
                         <?php
                         $ssql = "select * from res_category";
@@ -211,7 +209,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                 </div>
             </div>
         </div>
-
         <h3 class="box-title m-t-40">Restaurant Address</h3>
         <hr>
         <div class="row">

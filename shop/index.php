@@ -10,6 +10,24 @@
         overflow-y: auto;
     }
 
+    .nav-buttons {
+        padding: 20px 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .nav-buttons .nav-btn {
+        color: black;
+        padding: 8px 10px;
+    }
+
+    .nav-btn.active {
+        background-color: #7b7c7eff;
+        color: white;
+    }
+
     @media (max-width: 768px) {
         .sidebar {
             position: static;
@@ -23,50 +41,51 @@
     }
 </style>
 <div class="container-fluid" style=" padding-top: 80px;">
-    <div class="row mb-4">
-        <div class="col-12 text-center">
-            <h1 class="display-6"><i class="fas fa-store me-2"></i>My Shop</h1>
+    <?php if (isset($_SESSION['rs_name'])): ?>
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h1 style="text-align: center; text-secondary"><i class="fas fa-store me-2 text-primary"></i>
+                    <?= $_SESSION['rs_name'] ?> <i class="fas fa-store me-2 text-primary"></i></h1>
+            </div>
         </div>
-    </div>
-    <?php
+        <?php
+    endif;
     if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 'shop') {
         header("refresh:1;url=/zerowaste");
         exit;
     }
     $check_restaurant = $db->query("SELECT * FROM restaurant WHERE user_id = " . (int) $_SESSION['user_id'] . "");
     if (mysqli_num_rows($check_restaurant) > 0):
-            if(!isset($_SESSION['rs_id']))
-                $_SESSION['rs_id'] = mysqli_fetch_assoc($check_restaurant)['rs_id'];
+        if (!isset($_SESSION['rs_id'])) {
+            $res = mysqli_fetch_assoc($check_restaurant);
+            $_SESSION['rs_id'] = $res['rs_id'];
+            $_SESSION['rs_name'] = $res['title'];
+        }
         ?>
-        <div class="row">
-            <!-- Sidebar Navigation -->
-            <div class="col-lg-3 col-md-4 mb-4 mb-md-0">
-                <div class="card sidebar shadow-sm">
+        <div class="container">
+            <div class="sidebar">
+                <div class="card shadow">
                     <div class="card-body">
-                        <div class="d-grid gap-2">
+                        <div class="nav-buttons">
                             <a href="?p=dashboard"
-                                class="btn btn-outline-primary text-start <?= ($_GET['p'] ?? 'dashboard') == 'dashboard' ? 'active' : '' ?>">
-                                <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                                class="nav-btn rounded <?= ($_GET['p'] ?? 'dashboard') == 'dashboard' ? 'active' : '' ?>">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard
                             </a>
-                            <!-- <a href="?p=category"
-                                class="btn btn-outline-primary text-start <?= ($_GET['p'] ?? '') == 'category' ? 'active' : '' ?>">
-                                <i class="fas fa-list me-2"></i>Category
-                            </a> -->
                             <a href="?p=dishes"
-                                class="btn btn-outline-primary text-start <?= ($_GET['p'] ?? '') == 'dishes' ? 'active' : '' ?>">
-                                <i class="fas fa-utensils me-2"></i> Dishes
+                                class="nav-btn rounded <?= ($_GET['p'] ?? '') == 'dishes' ? 'active' : '' ?>">
+                                <i class="fas fa-utensils"></i> Dishes
                             </a>
                             <a href="?p=setting"
-                                class="btn btn-outline-primary text-start <?= ($_GET['p'] ?? '') == 'setting' ? 'active' : '' ?>">
-                                <i class="fas fa-cog me-2"></i> Shop Setting
+                                class="nav-btn rounded <?= ($_GET['p'] ?? '') == 'setting' ? 'active' : '' ?>">
+                                <i class="fas fa-store"></i> My Shop
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-9 col-md-8">
-                <div class="card main-content shadow-sm">
+            <div class="main-content">
+                <div class="card shadow">
                     <div class="card-body">
                         <?php
                         $p = $_GET['p'] ?? 'dashboard';
@@ -95,8 +114,9 @@
                 </div>
             </div>
         </div>
-    <?php else: 
+
+    <?php else:
         include 'create_res.php';
-    ?>
+        ?>
     <?php endif; ?>
 </div>
