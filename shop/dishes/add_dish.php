@@ -6,11 +6,12 @@ if (isset($_POST['submit'])) {
     $d_name = trim($_POST['d_name']);
     $about = trim($_POST['about']);
     $res_id = $_SESSION['rs_id'];
+    $stock = (int) $_POST['stock'];
 
     if (empty($d_name) || empty($about) || empty($res_id)) {
         $error = '<strong>All fields must be filled!</strong>';
     } else {
-        $upload_dir = __DIR__ . "/../uploads/dishes/";
+        $upload_dir = __DIR__ . "/../../uploads/dishes/";
         $target_file = "";
 
         if (!empty($_FILES['file']['name'])) {
@@ -36,11 +37,10 @@ if (isset($_POST['submit'])) {
             $error = '<strong>Please select an image file.</strong>';
         }
 
-        // If no errors, insert into DB
         if (empty($error)) {
-            $query = "INSERT INTO dishes (rs_id, title, slogan, img) VALUES (?, ?, ?, ?)";
+            $query = "INSERT INTO dishes (rs_id, title, slogan, img, stock) VALUES (?, ?, ?, ?, ?)";
             $stmt = mysqli_prepare($db, $query);
-            mysqli_stmt_bind_param($stmt, 'isss', $res_id, $d_name, $about, $unique_name);
+            mysqli_stmt_bind_param($stmt, 'isssi', $res_id, $d_name, $about, $unique_name, $stock);
 
             if (mysqli_stmt_execute($stmt)) {
                 $success = '<strong>New dish added successfully.</strong>';
@@ -52,8 +52,8 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
-<div class="text-danger"><?= $error ?></div>
-<div class="text-success"><?= $success ?></div>
+<div class="text-danger" style="text-align: center; padding: 10px 0;"><?= $error ?></div>
+<div class="text-success" style="text-align: center; padding: 10px 0;"><?= $success ?></div>
 <form action="" method="post" enctype="multipart/form-data" style="padding: 20px">
     <a href="shop.php?p=dishes" class="d-block mb-1 mt-1"><i class="fas fa-arrow-left"></i></a>
     <div class="form-body">
@@ -68,6 +68,11 @@ if (isset($_POST['submit'])) {
         <div class="mb-3">
             <label for="about" class="form-label">Description</label>
             <input type="text" id="about" name="about" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="stock" class="form-label">Stock</label>
+            <input type="number" id="stock" name="stock" class="form-control" required>
         </div>
 
         <div class="mb-3">
