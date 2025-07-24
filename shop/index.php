@@ -6,8 +6,8 @@
     }
 
     .main-content {
-        max-height: calc(100vh - 120px);
-        overflow-y: auto;
+        /* max-height: calc(100vh - 120px); */
+        /* overflow-y: auto; */
     }
 
     .nav-buttons {
@@ -79,8 +79,8 @@
                                 class="nav-btn rounded <?= ($_GET['p'] ?? '') == 'claims' ? 'active' : '' ?>">
                                 <i class="fas fa-inbox"></i> User Claims
                             </a>
-                            <a href="?p=setting"
-                                class="nav-btn rounded <?= ($_GET['p'] ?? '') == 'setting' ? 'active' : '' ?>">
+                            <a href="?p=my"
+                                class="nav-btn rounded <?= ($_GET['p'] ?? '') == 'my' ? 'active' : '' ?>">
                                 <i class="fas fa-store"></i> My Shop
                             </a>
                         </div>
@@ -103,8 +103,8 @@
                             case 'dishes':
                                 include 'dishes.php';
                                 break;
-                            case 'setting':
-                                include 'setting.php';
+                            case 'my':
+                                include 'myshop.php';
                                 break;
                             case 'ad':
                                 include 'dishes/add_dish.php';
