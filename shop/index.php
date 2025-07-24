@@ -75,6 +75,10 @@
                                 class="nav-btn rounded <?= ($_GET['p'] ?? '') == 'dishes' ? 'active' : '' ?>">
                                 <i class="fas fa-utensils"></i> Dishes
                             </a>
+                            <a href="?p=claims"
+                                class="nav-btn rounded <?= ($_GET['p'] ?? '') == 'claims' ? 'active' : '' ?>">
+                                <i class="fas fa-inbox"></i> User Claims
+                            </a>
                             <a href="?p=setting"
                                 class="nav-btn rounded <?= ($_GET['p'] ?? '') == 'setting' ? 'active' : '' ?>">
                                 <i class="fas fa-store"></i> My Shop
@@ -107,6 +111,9 @@
                                 break;
                             case 'ed':
                                 include 'dishes/edit_dish.php';
+                                break;
+                            case 'claims':
+                                include 'claims/index.php';
                                 break;
                         }
                         ?>

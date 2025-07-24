@@ -5,7 +5,6 @@
                 <div class="card">
                     <div class="dish-head">
                         <h3 class="dish-title">Dishes</h3>
-
                         <form action="" method="get" class="dish-search">
                             <input type="search" name="search" id="search" placeholder="Search..."
                                 class="search-input" />
@@ -15,6 +14,7 @@
                             <i class="fas fa-plus"></i> Add New Dish
                         </a>
                     </div>
+
                     <div class="table-responsive m-t-40">
                         <div class="dish-cards">
                             <?php
@@ -65,39 +65,43 @@
 </div>
 <style>
     .dish-head {
+        background-color: #f5f7fa;
+        padding: 1rem;
+        border-radius: 8px;
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
         gap: 1rem;
-        padding: 1rem;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
     }
 
     .dish-title {
         flex: 1 1 100%;
         font-size: 1.5rem;
         margin: 0;
-        color: #000;
+        color: #333;
+        font-weight: 600;
     }
 
     .dish-search {
         flex: 1;
-        display: flex;
-        justify-content: flex-start;
         max-width: 300px;
     }
 
     .search-input {
         width: 100%;
         padding: 8px 12px;
-        background-color: #b7bdb860;
+        background-color: #e9ecef;
         border: none;
         border-radius: 5px;
+        color: #333;
     }
 
     .add-dish-btn {
         white-space: nowrap;
-        padding: 8px 12px;
+        padding: 10px 12px;
+        font-size: 0.95rem;
     }
 
     @media (max-width: 768px) {
@@ -108,20 +112,15 @@
 
         .dish-title {
             text-align: center;
-            margin-bottom: 0.5rem;
         }
 
-        .dish-search {
-            justify-content: center;
-            width: 100%;
-        }
-
+        .dish-search,
         .add-dish-btn {
             width: 100%;
             text-align: center;
-            justify-content: center;
         }
     }
+
 
     .dish-cards {
         display: grid;
