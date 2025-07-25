@@ -9,6 +9,16 @@ include 'parts/start.php';
             <h2 class="mb-4">My Claim Requests</h2>
 
             <div class="table-responsive">
+                <?php
+
+                $msg = null;
+                if (isset($_GET['action']) && $_GET['action'] == 'delete') {
+                    $delete = mysqli_query($db, "DELETE FROM users_claims WHERE id = " . mysqli_real_escape_string($db, $_GET['id']) . "");
+                    if ($delete) {
+                        $msg = "Deleted!";
+                    }
+                } ?>
+                <div class="text-danger h3" style="width: fit-content; margin: auto"><?= $msg ?? '' ?></div>
                 <table class="table table-bordered table-hover">
                     <thead class="bg-white text-white">
                         <tr>
@@ -27,7 +37,7 @@ include 'parts/start.php';
                         $query_res = mysqli_query($db, "SELECT dishes.title, users_claims.*, restaurant.title as res_title,
                         restaurant.address
                         FROM users_claims JOIN dishes ON dishes.d_id = users_claims.d_id 
-                        JOIN restaurant ON dishes.rs_id = restaurant.rs_id WHERE u_id = '" . $_SESSION['user_id'] . "'");
+                        JOIN restaurant ON dishes.rs_id = restaurant.rs_id WHERE u_id = '" . $_SESSION['user_id'] . "' ORDER BY users_claims.id DESC");
                         if (mysqli_num_rows($query_res) == 0) {
                             echo '<tr><td colspan="8" class="text-center">You have no orders placed yet.</td></tr>';
                         } else {
@@ -53,7 +63,7 @@ include 'parts/start.php';
                                     <td class="d-none d-md-table-cell" data-label="Date">' . htmlspecialchars($row['date']) . '</td>
                                     <td class="d-none d-lg-table-cell" data-label="Restaurant Address">' . htmlspecialchars($row['address']) . '</td>
                                     <td data-label="Actions">
-                                        <a href="delete_orders.php?order_del=' . intval($row['id']) . '" onclick="return confirm(\'Are you sure you want to cancel your order?\');" class="btn btn-danger btn-sm">
+                                        <a href="claims.php?action=delete&id=' . intval($row['id']) . '" onclick="return confirm(\'Are you sure you want to cancel your order?\');" class="btn btn-danger btn-sm">
                                             <i class="fa fa-trash"></i>
                                         </a>
                                     </td>

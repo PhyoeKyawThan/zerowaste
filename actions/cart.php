@@ -1,16 +1,20 @@
 <?php
-function getProductDetails($db, $productId) {
+function getProductDetails($db, $productId)
+{
     $stmt = $db->prepare("SELECT * FROM dishes WHERE d_id = ?");
     $stmt->bind_param('i', $productId);
     $stmt->execute();
     return $stmt->get_result()->fetch_object();
 }
 
-function addToCart($db, $productId, $quantity) {
-    if (empty($quantity)) return;
+function addToCart($db, $productId, $quantity)
+{
+    if (empty($quantity))
+        return;
 
     $product = getProductDetails($db, $productId);
-    if (!$product) return;
+    if (!$product)
+        return;
 
     $item = [
         $product->d_id => [
@@ -23,10 +27,10 @@ function addToCart($db, $productId, $quantity) {
 
     if (!empty($_SESSION['cart_item'])) {
         if (array_key_exists($product->d_id, $_SESSION['cart_item'])) {
-            if($_SESSION['cart_item'][$product->d_id]['quantity'] == 0){
+            if ($_SESSION['cart_item'][$product->d_id]['quantity'] == 0) {
                 $_SESSION['cart_item'][$product->d_id]['quantity'] = $quantity;
-            }else
-            $_SESSION['cart_item'][$product->d_id]['quantity'] += $quantity;
+            } else
+                $_SESSION['cart_item'][$product->d_id]['quantity'] += $quantity;
         } else {
             $_SESSION['cart_item'] += $item;
         }
@@ -35,7 +39,8 @@ function addToCart($db, $productId, $quantity) {
     }
 }
 
-function removeFromCart($productId) {
+function removeFromCart($productId)
+{
     if (!empty($_SESSION["cart_item"])) {
         foreach ($_SESSION["cart_item"] as $k => $v) {
             if ($productId == $v['d_id']) {
@@ -45,12 +50,14 @@ function removeFromCart($productId) {
     }
 }
 
-function emptyCart() {
+function emptyCart()
+{
     unset($_SESSION["cart_item"]);
 }
 
-function proceedToCheckout() {
-    include __DIR__.'/../views/confirm_dish_claim.php';
+function proceedToCheckout()
+{
+    include __DIR__ . '/../views/confirm_dish_claim.php';
     exit;
 }
 
@@ -61,18 +68,23 @@ switch ($action) {
     case "add":
         if ($productId && $quantity > 0) {
             addToCart($db, $productId, $quantity);
+            header("Location: restaurants.php?res_id=" . intval($_GET['res_id']));
+            exit();
         }
         break;
 
     case "remove":
         if ($productId) {
             removeFromCart($productId);
+            header("Location: restaurants.php?res_id=" . intval($_GET['res_id']));
+            exit();
         }
         break;
 
     case "empty":
         emptyCart();
-        break;
+        header("Location: restaurants.php?res_id=" . intval($_GET['res_id']));
+        exit();
 
     case "confirm":
         proceedToCheckout();

@@ -60,9 +60,9 @@ include 'parts/start.php';
                         <div class="food-item-wrap">
                             <div class="figure-wrap bg-image" data-image-src="/zerowaste/uploads/dishes/' . $r['img'] . '"></div>
                             <div class="content">
-                                <h5><a href="dishes.php?res_id=' . $r['rs_id'] . '">' . $r['title'] . '</a></h5>
+                                <h5><a href="restaurants.php?res_id=' . $r['rs_id'] . '">' . $r['title'] . '</a></h5>
                                 <div class="product-name">' . $r['slogan'] . '</div>
-                                <div><a href="dishes.php?res_id=' . $r['rs_id'] . '" class="btn theme-btn-dash pull-right">Order Now</a></div>
+                                <div><a href="restaurants.php?res_id=' . $r['rs_id'] . '" class="btn theme-btn-dash pull-right">Order Now</a></div>
                             </div>
                         </div>
                     </div>';

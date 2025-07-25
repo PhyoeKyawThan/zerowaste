@@ -3,12 +3,12 @@ function showSuccessAlert()
 {
     echo "<script>
         alert('Thank you. Your Order has been placed!');
-        window.location.replace('your_orders.php');
+        window.location.replace('claims.php');
     </script>";
 }
 
 if (empty($_SESSION["user_id"])) {
-    header('location:login.php');
+    header('Location: login.php');
     exit();
 }
 
@@ -28,8 +28,6 @@ if (isset($_POST['submit'])) {
 
             $SQL = "INSERT INTO users_claims (u_id, d_id, quantity, pickup_time)
                     VALUES ('$user_id', '$d_id', '$quantity', '$pickup_time')";
-            echo $SQL;
-
             mysqli_query($db, $SQL);
         }
         unset($_SESSION["cart_item"]);
