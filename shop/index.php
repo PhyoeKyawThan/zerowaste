@@ -40,7 +40,7 @@
         }
     }
 </style>
-<div class="container-fluid" style=" padding-top: 80px;">
+<div class="container-fluid" style="box-sizing: border-box; padding-top: 80px;">
     <?php if (isset($_SESSION['rs_name'])): ?>
         <div class="row mb-4">
             <div class="col-12 text-center">
@@ -88,7 +88,7 @@
                 </div>
             </div>
 
-            <div class="main-content">
+            <div class="main-content w-100" style="">
                 <div class="card shadow">
                     <div class="card-body">
                         <?php

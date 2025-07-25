@@ -48,6 +48,7 @@ include 'parts/start.php';
                                     <td data-label="Item">' . htmlspecialchars($row['title']) . '</td>
                                     <td data-label="Qty">' . intval($row['quantity']) . '</td>
                                     <td class="p-2" data-label="Status">' . $statusBtn . '</td>
+                                    
                                     <td data-label="Pickup">' . htmlspecialchars($row['pickup_time']) . '</td>
                                     <td class="d-none d-md-table-cell" data-label="Date">' . htmlspecialchars($row['date']) . '</td>
                                     <td class="d-none d-lg-table-cell" data-label="Restaurant Address">' . htmlspecialchars($row['address']) . '</td>

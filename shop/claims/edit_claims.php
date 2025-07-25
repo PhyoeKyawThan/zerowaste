@@ -2,7 +2,7 @@
     <div class="container-fluid w-100">
         <div class="row justify-content-center w-100">
             <div class="col-lg-8 w-100">
-                <div class="card shadow-sm" style="margin: auto;">
+                <div class="card shadow-sm" style="margin: auto; width: 75vw;">
                     <div class="card-header bg-primary text-white">
                         <h4 class="mb-0 text-white">Order Details</h4>
                     </div>
@@ -29,7 +29,7 @@
                                         <td><?php echo htmlspecialchars($row['username']); ?></td>
                                         <td class="text-end">
                                             <button type="button" class="btn btn-primary btn-sm" 
-                                                    onclick="popUpWindow('shop/claims/forms/update_form.php?id=<?= $row['id'] ?>')">
+                                                    onclick="popUpWindow('shop/claims/forms/update_form.php?id=<?= $row['id'] ?>&ava_stock=<?= $row['stock'] ?>')">
                                                 <i class="fas fa-edit"></i> Update Status
                                             </button>
                                         </td>
@@ -40,7 +40,7 @@
                                         <td><?php echo htmlspecialchars($row['title']); ?></td>
                                         <td class="text-end">
                                             <button type="button" class="btn btn-info btn-sm" 
-                                                    onclick="popUpWindow('userprofile.php?newform_id=<?php echo htmlentities($row['id']); ?>')">
+                                                    onclick="popUpWindow('shop/claims/forms/claim_user.php?id=<?php echo htmlentities($row['id']); ?>')">
                                                 <i class="fas fa-user"></i> View User
                                             </button>
                                         </td>
@@ -92,7 +92,7 @@
                     
                     <div class="card-footer text-end">
                         <a href="shop.php?p=claims" class="btn btn-secondary">
-                            <i class="fas fa-arrow-left"></i> Back to Orders
+                            <i class="fas fa-arrow-left"></i> Back
                         </a>
                     </div>
                 </div>

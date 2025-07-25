@@ -1,23 +1,22 @@
 <?php
 $msg = null;
 $err = null;
-if (isset($_GET['action'])) {
-    if ($_GET['action'] == 'delete') {
+if (isset($_GET['action']) && $_GET['action'] == 'edit') {
+        include 'edit_claims.php';
+} else {
+    if (isset($_GET['action']) && $_GET['action'] == 'delete') {
         $qry_str = "DELETE FROM users_claims WHERE id = ?";
         $del_stmt = mysqli_prepare($db, $qry_str);
+        $del_stmt->bind_param('i', $_GET['id']);
         if (mysqli_execute($del_stmt)) {
             $msg = "Item Deleted";
         } else {
             $err = "Error while deleting item";
         }
     }
-
-    if ($_GET['action'] == 'edit') {
-        include 'edit_claims.php';
-    }
-} else {
     ?>
     <div class="table-responsive m-t-40">
+        <div class="align-center text-danger text-muted h3" style="width: fit-content; margin: auto;"><?= $msg ?></div>
         <table id="myTable" class="table table-bordered table-striped">
             <thead class="thead-dark">
                 <tr>
@@ -67,8 +66,8 @@ if (isset($_GET['action'])) {
 
                         echo '<td>' . $rows['date'] . '</td>
                         <td>
-                            <a href="'.$_SERVER['REQUEST_URI'].'&action=delete&id=' . $rows['claim_id'] . '" onclick="return confirm(\'Are you sure?\');" class="btn btn-danger rounded"><i class="fa fa-trash-o"></i></a>
-                            <a href="'.$_SERVER['REQUEST_URI'].'&action=edit&id=' . $rows['claim_id'] . '" class="btn btn-info rounded m-l-5"><i class="fa fa-edit"></i></a>
+                            <a href="' . $_SERVER['REQUEST_URI'] . '&action=delete&id=' . $rows['claim_id'] . '" onclick="return confirm(\'Are you sure?\');" class="btn btn-danger rounded"><i class="fa fa-trash-o"></i></a>
+                            <a href="' . $_SERVER['REQUEST_URI'] . '&action=edit&id=' . $rows['claim_id'] . '" class="btn btn-info rounded m-l-5"><i class="fa fa-edit"></i></a>
                         </td>
                     </tr>';
                     }

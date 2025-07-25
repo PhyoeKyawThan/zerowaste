@@ -4,6 +4,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 ?>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,27 +22,41 @@ error_reporting(E_ALL);
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <?php
-    if($_SERVER['REQUEST_METHOD'] == 'POST'){
-        $status = trim($_POST['status']);
-        $claim_id = (int) $_GET['id'];
-        $remark = trim($_POST['remark']);
-        if($claim_id && $status){
-            include '../../../connection/connect.php';
-            $query_str = "INSERT INTO remark(users_claims_id, status, remark) VALUES(?, ?, ?)";
-            $update_sts = "UPDATE users_claims SET status = ? WHERE id = ?";
-            $update = mysqli_prepare($db, $update_sts);
-            mysqli_stmt_bind_param($update, "si", $status, $claim_id);
-            if(mysqli_execute($update)){
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $status = trim($_POST['status']);
+    $claim_id = (int) $_GET['id'];
+    $remark = trim($_POST['remark']);
+    if ($claim_id && $status) {
+        include '../../../connection/connect.php';
+        $query_str = "INSERT INTO remark(users_claims_id, status, remark) VALUES(?, ?, ?)";
+        $update_sts = "UPDATE users_claims SET status = ? WHERE id = ?";
+        $check_qry = "SELECT * FROM remark WHERE users_claims_id = ?";
+        $update = mysqli_prepare($db, $update_sts);
+        mysqli_stmt_bind_param($update, "si", $status, $claim_id);
+        if (mysqli_execute($update)) {
+            $remark_check = mysqli_prepare($db, $check_qry);
+            mysqli_stmt_bind_param($remark_check, 'i', $claim_id);
+            mysqli_execute($remark_check);
+            $remark_check = $remark_check->get_result()->fetch_assoc();
+            if (!$remark_check['id']) {
                 $remark_insert = mysqli_prepare($db, $query_str);
                 mysqli_stmt_bind_param($remark_insert, 'iss', $claim_id, $status, $remark);
-                if(mysqli_execute($remark_insert)){
+                if (mysqli_execute($remark_insert)) {
+                    echo "<script>alert('Form Details Updated Successfully'); window.close();</script>";
+                }
+            } else {
+                $remark_update = mysqli_prepare($db, "UPDATE remark SET users_claims_id = ?, status = ?, remark = ? WHERE id = ?");
+                mysqli_stmt_bind_param($remark_update, 'issi', $claim_id, $status, $remark, $remark_check['id']);
+                if (mysqli_execute($remark_update)) {
                     echo "<script>alert('Form Details Updated Successfully'); window.close();</script>";
                 }
             }
         }
     }
+}
+
 ?>
-<form name="updateticket" id="updatecomplaint" method="post" class="needs-validation" novalidate>
+<form name="updateticket" id="updatecomplaint" method="post" class="needs-validation" onsubmit="checkAvaStock()" novalidate>
     <div class="container">
         <div class="card shadow-sm">
             <div class="card-header text-dark">
@@ -131,6 +146,10 @@ error_reporting(E_ALL);
             }, false);
         }, false);
     })();
+
+    function checkAvaStock(){
+        const ava_stock = <?= (int) $_GET['ava_stock'] ?>;
+    }
 </script>
 <script src="/zerowaste/js/jquery.min.js"></script>
 <script src="/zerowaste/js/tether.min.js"></script>
