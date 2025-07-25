@@ -16,7 +16,7 @@
                                 <li class="nav-item"><a href="registration.php" class="nav-link active">Register</a> </li>';
                     } else {
                         if($_SESSION['user_role'] == 'user')
-                            echo '<li class="nav-item"><a href="your_orders.php" class="nav-link active">My Orders</a> </li>';
+                            echo '<li class="nav-item"><a href="claims.php" class="nav-link active">My Claims</a> </li>';
                         else
                             echo '<li class="nav-item"><a href="shop.php" class="nav-link active">My Shop</a> </li>';
                         echo '<li class="nav-item"><a href="logout.php" class="nav-link active">Logout</a> </li>';
