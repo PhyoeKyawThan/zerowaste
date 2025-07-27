@@ -12,6 +12,7 @@ session_start();
 //     exit();
 // }
 ?>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,22 +25,33 @@ session_start();
             background: #343a40;
             position: fixed;
         }
+
         .sidebar a {
             color: #fff;
             text-decoration: none;
             display: block;
             padding: 10px;
+            transition: 0.3s ease-out;
         }
+
         .sidebar a:hover {
             background-color: #495057;
+            border-radius: 10px;
         }
+
         .dashboard-card i {
             font-size: 2rem;
         }
+
+        .active {
+            background-color: #495057;
+            border-radius: 10px;
+        }
     </style>
 </head>
+
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <?php include 'nav.php' ?>
-        <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 py-4">
+    <div class="container-fluid">
+        <div class="row">
+            <?php include 'nav.php' ?>
+            <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 py-4">
