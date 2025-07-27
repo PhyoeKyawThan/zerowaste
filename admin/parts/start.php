@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
 <?php
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -7,12 +5,13 @@ error_reporting(E_ALL);
 
 include("../connection/connect.php");
 session_start();
-// if (empty($_SESSION["adm_id"])) {
-//     header('location:index.php');
-//     exit();
-// }
+if (empty($_SESSION["adm_id"])) {
+    header('Location: auth/login.php');
+    exit();
+}
 ?>
-
+<!DOCTYPE html>
+<html lang="en"></html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

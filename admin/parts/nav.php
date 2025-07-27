@@ -25,7 +25,7 @@
         <a href="users_claims.php" class="<?= $current === 'users_claims.php' ? 'active' : '' ?>">
             <i class="fa fa-inbox me-2"></i> Users Claims
         </a>
-        <a href="logout.php" class="mt-4">
+        <a href="logout.php" class="mt-4" onclick="return confirm('Are you sure to logout?')">
             <i class="fa fa-sign-out-alt me-2"></i> Logout
         </a>
 
