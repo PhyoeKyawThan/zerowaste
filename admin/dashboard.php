@@ -1,7 +1,8 @@
 <?php
 include 'parts/start.php';
 ?>
-<h2 class="mb-4 bg-primary p-2 text-white rounded">Admin Dashboard</h2>
+<h2 class="text-primary"><i class="fa fa-tachometer-alt me-2"></i> Admin Dashboard</h2>
+<hr>
 <div class="row g-4">
     <?php
     $cards = [

@@ -42,17 +42,17 @@
                             } else {
                                 while ($rows = mysqli_fetch_array($query)) {
                                     echo '<div class="dish-card">
-                    <img src="/zerowaste/uploads/dishes/' . $rows['img'] . '" alt="' . htmlspecialchars($rows['title']) . '" class="dish-image" />
-                    <div class="dish-info">
-                        <h3 class="dish-title">' . htmlspecialchars($rows['title']) . '</h3>
-                        <p class="dish-description">' . htmlspecialchars($rows['slogan']) . '</p>
-                        <p class="dish-stock"><strong>Stock:</strong> ' . $rows['stock'] . '</p>
-                        <div class="dish-actions">
-                            <a href="shop.php?p=ed&d_id=' . $rows['d_id'] . '" class="btn btn-edit"><i class="fa fa-edit"></i> Edit</a>
-                            <a href="shop.php?p=dishes&dd=' . $rows['d_id'] . '" class="btn btn-delete" onclick="return confirm(\'Are you sure you want to delete this dish?\')"><i class="fa fa-trash-o"></i> Delete</a>
-                        </div>
-                    </div>
-                </div>';
+                                    <img src="/zerowaste/uploads/dishes/' . $rows['img'] . '" alt="' . htmlspecialchars($rows['title']) . '" class="dish-image" />
+                                    <div class="dish-info">
+                                        <h3 class="dish-title">' . htmlspecialchars($rows['title']) . '</h3>
+                                        <p class="dish-description">' . htmlspecialchars($rows['slogan']) . '</p>
+                                        <p class="dish-stock"><strong>Stock:</strong> ' . $rows['stock'] . '</p>
+                                        <div class="dish-actions">
+                                            <a href="shop.php?p=ed&d_id=' . $rows['d_id'] . '" class="btn btn-edit"><i class="fa fa-edit"></i> Edit</a>
+                                            <a href="shop.php?p=dishes&dd=' . $rows['d_id'] . '" class="btn btn-delete" onclick="return confirm(\'Are you sure you want to delete this dish?\')"><i class="fa fa-trash-o"></i> Delete</a>
+                                        </div>
+                                    </div>
+                                    </div>';
                                 }
                             }
                             ?>

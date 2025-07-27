@@ -25,7 +25,8 @@ if (isset($_GET['res_id'])) {
     } else {
         ?>
         <div class="container">
-            <h2 class="mb-4 bg-primary p-2 text-white rounded">Restaurants</h2>
+            <h2 class="text-primary"><i class="fas fa-shop"></i> Restaurants</h2>
+            <hr>
             <form action="" method="get" class="form">
                 <input type="search" name="s" id="" class="form-control mb-1" placeholder="Search Restaurant">
             </form>
@@ -40,10 +41,7 @@ if (isset($_GET['res_id'])) {
                             <th scope="col">Email</th>
                             <th scope="col">Phone</th>
                             <th scope="col">Url</th>
-                            <!-- <th scope="col">Open Hrs</th> -->
-                            <!-- <th scope="col">Close Hrs</th> -->
                             <th scope="col">Open Days</th>
-                            <!-- <th scope="col">Address</th> -->
                             <th scope="col">Dishes</th>
                             <th scope="col">Date</th>
                             <th scope="col">Actions</th>
@@ -61,12 +59,8 @@ if (isset($_GET['res_id'])) {
                             echo '<td>' . htmlspecialchars($row['email']) . '</td>';
                             echo '<td>' . htmlspecialchars($row['phone']) . '</td>';
                             echo '<td>' . htmlspecialchars($row['url']) . '</td>';
-                            // echo '<td>' . htmlspecialchars($row['o_hr']) . '</td>';
-                            // echo '<td>' . htmlspecialchars($row['c_hr']) . '</td>';
                             echo '<td>' . htmlspecialchars($row['o_days']) . '</td>';
-                            // echo '<td>' . htmlspecialchars($row['address']) . '</td>';
                 
-
                             $dish_q = mysqli_query($db, "SELECT COUNT(*) AS total FROM dishes WHERE rs_id = " . intval($row['rs_id']));
                             $dish_count = mysqli_fetch_assoc($dish_q)['total'];
 

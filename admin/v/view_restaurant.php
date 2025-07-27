@@ -2,6 +2,7 @@
 $restaurant = [];
 $sql = "SELECT restaurant.*, res_category.c_name FROM restaurant JOIN res_category ON res_category.c_id = restaurant.c_id WHERE rs_id = ?";
 $stmt = mysqli_prepare($db, $sql);
+$res_id = $_GET['res_id'];
 mysqli_stmt_bind_param($stmt, "i", $_GET['res_id']);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
@@ -10,7 +11,8 @@ mysqli_stmt_close($stmt);
 
 ?>
 <form action="" method="post" enctype="multipart/form-data" style="padding: 20px">
-    <a href="/zerowaste/admin/restaurants.php" class="fas fa-arrow-left text-decoration-none fs-4"></a>
+    <a href="<?= $_GET['from'] ?? '/zerowaste/admin/restaurants.php' ?>"
+        class="fas fa-arrow-left text-decoration-none fs-4"></a>
     <h3>Details</h3>
     <div class="form-body">
         <div class="row p-t-20">
@@ -83,7 +85,7 @@ mysqli_stmt_close($stmt);
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label class="control-label">Select Category</label>
+                    <label class="control-label">Category</label>
                     <input type="text" class="form-control" value="<?= $restaurant['c_name'] ?>" readonly>
                 </div>
             </div>
@@ -93,10 +95,54 @@ mysqli_stmt_close($stmt);
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <textarea name="address" style="height:100px;" class="form-control"
-                        required readonly><?= htmlspecialchars($restaurant['address'] ?? '') ?></textarea>
+                    <textarea name="address" style="height:100px;" class="form-control" required
+                        readonly><?= htmlspecialchars($restaurant['address'] ?? '') ?></textarea>
                 </div>
             </div>
         </div>
     </div>
 </form>
+<?php
+$query = mysqli_query($db, "SELECT ds.*, rs.title as rs_title, c.c_name FROM dishes as ds JOIN restaurant as rs ON rs.rs_id = ds.rs_id JOIN res_category as c ON c.c_id = rs.c_id WHERE rs.rs_id = $res_id ORDER BY d_id DESC");
+
+?>
+<div class="container">
+    <h2 class="fas fa-utensils"> Dishes</h2>
+    <div class="table-responsive">
+        <table class="table table-striped align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Dish</th>
+                    <!-- <th scope="col">Category</th> -->
+                    <th scope="col">Stock</th>
+                    <th scope="col">Total Claims</th>
+                    <th scope="col">Created</th>
+                    <!-- <th scope="col">Actions</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $i = 1;
+                while ($row = mysqli_fetch_assoc($query)) {
+                    $d_id = $row['d_id'];
+                    $claims = mysqli_query($db, "SELECT quantity as total_claims FROM users_claims WHERE d_id = $d_id");
+                    echo '<tr>';
+                    echo '<th scope="row">' . $i++ . '</th>';
+                    echo '<td>' . htmlspecialchars($row['title']) . '</td>';
+                    // echo '<td>' . htmlspecialchars($row['c_name']) . '</td>';
+                    echo '<td>' . htmlspecialchars($row['stock']) . '</td>';
+                    echo '<td>' . $claims->fetch_assoc()['total_claims'] . '</td>';
+                    echo '<td>' . htmlspecialchars($row['created_at']) . '</td>';
+
+                    echo '<td>';
+                    echo '<div class="d-flex gap-2">';
+                    echo '</div>';
+                    echo '</td>';
+                    echo '</tr>';
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -7,10 +7,10 @@ error_reporting(E_ALL);
 
 include("../connection/connect.php");
 session_start();
-if (empty($_SESSION["adm_id"])) {
-    header('location:index.php');
-    exit();
-}
+// if (empty($_SESSION["adm_id"])) {
+//     header('location:index.php');
+//     exit();
+// }
 ?>
 <head>
     <meta charset="UTF-8">
