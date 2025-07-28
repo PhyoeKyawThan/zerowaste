@@ -34,6 +34,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $update = mysqli_prepare($db, $update_sts);
         mysqli_stmt_bind_param($update, "si", $status, $claim_id);
         if (mysqli_execute($update)) {
+             if($status == 'rejected'){
+                $stmt = mysqli_prepare($db, "UPDATE dishes SET stock = stock + ? WHERE d_id = ?");
+                $d_id =(int) $_GET['d_id'];
+                $qty = (int) $_GET['qty'];
+                $stmt->bind_param('ii', $qty, $d_id);
+                $stmt->execute();
+            }
             $remark_check = mysqli_prepare($db, $check_qry);
             mysqli_stmt_bind_param($remark_check, 'i', $claim_id);
             mysqli_execute($remark_check);
@@ -56,59 +63,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 ?>
-<form name="updateticket" id="updatecomplaint" method="post" class="needs-validation" onsubmit="checkAvaStock()" novalidate>
+<form name="updateticket" id="updatecomplaint" method="post" class="needs-validation" onsubmit="checkAvaStock()"
+    novalidate>
     <div class="container">
         <div class="card shadow-sm">
             <div class="card-header text-dark">
                 <h5 class="mb-0">Update Order Status</h5>
             </div>
-
-            <div class="card-body">
-                <!-- <div class="mb-3 row">
-                    <label class="col-md-3 col-form-label fw-bold">Form Number</label>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control"
-                            value="<?php //echo htmlentities($_GET['form_id']); ?>" readonly>
-                    </div>
-                </div> -->
-
-                <div class="mb-3 row">
-                    <label for="status" class="col-md-3 col-form-label fw-bold">Status</label>
-                    <div class="col-md-9">
-                        <select name="status" id="status" class="form-control" required>
-                            <option value="" selected disabled>Select Status</option>
-                            <option value="in process">On the way</option>
-                            <option value="closed">Delivered</option>
-                            <option value="rejected">Cancelled</option>
-                        </select>
-                        <div class="invalid-feedback">
-                            Please select a status
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mb-3 row">
-                    <label for="remark" class="col-md-3 col-form-label fw-bold">Message</label>
-                    <div class="col-md-9">
-                        <textarea name="remark" id="remark" class="form-control" rows="5" required></textarea>
-                        <div class="invalid-feedback">
-                            Please enter a message
-                        </div>
+            <div class="mb-3 row">
+                <label for="status" class="col-md-3 col-form-label fw-bold">Status</label>
+                <div class="col-md-9">
+                    <select name="status" id="status" class="form-control" required>
+                        <option value="" selected disabled>Select Status</option>
+                        <option value="in process">On the way</option>
+                        <option value="closed">Delivered</option>
+                        <option value="rejected">Cancelled</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Please select a status
                     </div>
                 </div>
             </div>
 
-            <div class="card-footer bg-light">
-                <div class="d-flex justify-content-between">
-                    <button type="submit" name="update" class="btn btn-primary px-4">
-                        <i class="fas fa-check me-2"></i> Submit
-                    </button>
-                    <button type="button" onclick="window.close();" class="btn btn-danger px-4">
-                        <i class="fas fa-times me-2"></i> Close Window
-                    </button>
+            <div class="mb-3 row">
+                <label for="remark" class="col-md-3 col-form-label fw-bold">Message</label>
+                <div class="col-md-9">
+                    <textarea name="remark" id="remark" class="form-control" rows="5" required></textarea>
+                    <div class="invalid-feedback">
+                        Please enter a message
+                    </div>
                 </div>
             </div>
         </div>
+
+        <div class="card-footer bg-light">
+            <div class="d-flex justify-content-between">
+                <button type="submit" name="update" class="btn btn-primary px-4">
+                    <i class="fas fa-check me-2"></i> Submit
+                </button>
+                <button type="button" onclick="window.close();" class="btn btn-danger px-4">
+                    <i class="fas fa-times me-2"></i> Close Window
+                </button>
+            </div>
+        </div>
+    </div>
     </div>
 </form>
 
@@ -147,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }, false);
     })();
 
-    function checkAvaStock(){
+    function checkAvaStock() {
         const ava_stock = <?= (int) $_GET['ava_stock'] ?>;
     }
 </script>

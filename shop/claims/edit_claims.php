@@ -28,10 +28,12 @@
                                         <th width="30%">Username:</th>
                                         <td><?php echo htmlspecialchars($row['username']); ?></td>
                                         <td class="text-end">
+                                            <?php if($row['status'] != 'rejected'): ?>
                                             <button type="button" class="btn btn-primary btn-sm" 
-                                                    onclick="popUpWindow('shop/claims/forms/update_form.php?id=<?= $row['id'] ?>&ava_stock=<?= $row['stock'] ?>')">
+                                                    onclick="popUpWindow('shop/claims/forms/update_form.php?id=<?= $row['id'] ?>&qty=<?= $row['quantity'] ?>&d_id=<?= $row['d_id'] ?>')">
                                                 <i class="fas fa-edit"></i> Update Status
                                             </button>
+                                            <?php endif; ?>
                                         </td>
                                     </tr>
                                     
