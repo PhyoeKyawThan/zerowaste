@@ -39,7 +39,7 @@ include 'parts/start.php';
                         remark.remark
                         FROM users_claims JOIN dishes ON dishes.d_id = users_claims.d_id 
                         JOIN restaurant ON dishes.rs_id = restaurant.rs_id 
-                        JOIN remark ON remark.users_claims_id = users_claims.id
+                        LEFT JOIN remark ON remark.users_claims_id = users_claims.id
                         WHERE u_id = '" . $_SESSION['user_id'] . "' ORDER BY users_claims.id DESC");
                         if (mysqli_num_rows($query_res) == 0) {
                             echo '<tr><td colspan="8" class="text-center">You have no orders placed yet.</td></tr>';

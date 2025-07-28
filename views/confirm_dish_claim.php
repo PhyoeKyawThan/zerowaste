@@ -28,7 +28,12 @@ if (isset($_POST['submit'])) {
 
             $SQL = "INSERT INTO users_claims (u_id, d_id, quantity, pickup_time)
                     VALUES ('$user_id', '$d_id', '$quantity', '$pickup_time')";
-            mysqli_query($db, $SQL);
+            $update_dishes_stock = "UPDATE dishes set stock = stock - ? WHERE d_id = ?";
+            $prepare_dish_stock_update = mysqli_prepare($db, $update_dishes_stock);
+            $prepare_dish_stock_update->bind_param('ii', $quantity, $d_id);
+            if(mysqli_query($db, $SQL)){
+                $prepare_dish_stock_update->execute();
+            }
         }
         unset($_SESSION["cart_item"]);
         showSuccessAlert();
