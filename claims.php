@@ -56,6 +56,7 @@ include 'parts/start.php';
                                 } elseif ($status == "rejected") {
                                     $statusBtn = '<span class="badge p-1 rounded bg-danger"><i class="fa fa-close"></i> Cancelled</span>';
                                 }
+                                $remark = $row['remark'] ?? 'Not viewed yet';
                                 echo '<tr>
                                     <td data-label="Restaurant">' . htmlspecialchars($row['res_title']) . '</td>
                                     <td data-label="Item">' . htmlspecialchars($row['title']) . '</td>
@@ -76,7 +77,7 @@ include 'parts/start.php';
                                                <!--<button class="close-btn" onclick="closeModal()">&times;</button>-->
                                               </div>
                                               <div class="modal-body">
-                                                '.$row['remark'].'
+                                                '.$remark.'
                                               </div>
                                               <div class="modal-footer">
                                                 <button class="btn-secondary" onclick="closeModal()">OK</button>
