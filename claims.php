@@ -48,13 +48,13 @@ include 'parts/start.php';
                                 $status = $row['status'];
                                 $statusBtn = '';
                                 if ($status == "" || $status == "NULL") {
-                                    $statusBtn = '<span class="badge p-1 rounded bg-info"><i class="fa fa-bars"></i> Dispatch</span>';
+                                    $statusBtn = '<span class="badge p-1 rounded bg-info text-white"><i class="fa fa-bars"></i> Dispatch</span>';
                                 } elseif ($status == "in process") {
-                                    $statusBtn = '<span class="badge p-1 rounded bg-warning"><i class="fa fa-cog fa-spin"></i> On The Way!</span>';
+                                    $statusBtn = '<span class="badge p-1 rounded bg-warning text-white"><i class="fa fa-cog fa-spin"></i> On The Way!</span>';
                                 } elseif ($status == "closed") {
-                                    $statusBtn = '<span class="badge p-1 rounded bg-success"><i class="fa fa-check-circle"></i> Delivered</span>';
+                                    $statusBtn = '<span class="badge p-1 rounded bg-success text-white"><i class="fa fa-check-circle"></i> Delivered</span>';
                                 } elseif ($status == "rejected") {
-                                    $statusBtn = '<span class="badge p-1 rounded bg-danger"><i class="fa fa-close"></i> Cancelled</span>';
+                                    $statusBtn = '<span class="badge p-1 rounded bg-danger text-white"><i class="fa fa-close"></i> Cancelled</span>';
                                 }
                                 $remark = $row['remark'] ?? 'Not viewed yet';
                                 echo '<tr>
