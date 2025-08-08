@@ -3,7 +3,7 @@ include 'parts/start.php';
 if (isset($_GET['res_id'])) {
     include 'v/view_restaurant.php';
 } else {
-    $query = mysqli_query($db, "SELECT users.*, res.rs_id  FROM users LEFT JOIN restaurant as res ON res.user_id = users.u_id");
+    $query = mysqli_query($db, "SELECT users.*, res.rs_id  FROM users LEFT JOIN restaurant as res ON res.user_id = users.u_id ORDER BY u_id DESC");
     if (isset($_GET['s'])) {
         $search = mysqli_real_escape_string($db, $_GET['s']);
         $query = mysqli_query($db, "
