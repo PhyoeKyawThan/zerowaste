@@ -186,6 +186,11 @@ else:
             }
         </style>
         <div class="page-wrapper">
+            <?php
+        if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'shop'):
+            echo '';
+        else:
+            ?>
             <div class="top-links">
                 <div class="container">
                     <ul class="row links">
@@ -195,6 +200,8 @@ else:
                     </ul>
                 </div>
             </div>
+
+            <?php endif; ?>
             <section class="" style="background-image: url('images/img/restrrr.png')">
                 <div class="profile">
                     <div class="container">
@@ -208,7 +215,19 @@ else:
                             <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 profile-desc">
                                 <div class="pull-left right-text white-txt">
                                     <h6><a href="#"><?php echo htmlspecialchars($rows['title']); ?></a></h6>
-                                    <p><?php echo nl2br(htmlspecialchars($rows['address'])); ?></p>
+                                    <p><b>Address: </b><?php echo nl2br(htmlspecialchars($rows['address'])); ?></p>
+                                    <p><b>Phone: </b><?= $rows['phone'] ?></p>
+                                    <p><b>Opening Time: </b><?= $rows['o_hr'].' - '.$rows['c_hr'] ?></p>
+                                    <p><b>Website: </b><?php
+                                        $url = $rows['url'];
+                                        $headers = @get_headers($url);
+                                        print_r($headers);
+                                        if($headers && strpos($headers[0], '200') !== false){
+                                            echo '<a href="'.$rows['url'].'">'.$rows['url'].'</a>';
+                                        }else{
+                                            echo '---';
+                                        }
+                                    ?></p>
                                 </div>
                             </div>
                         </div>

@@ -64,6 +64,13 @@ if (isset($_GET['res_id'])) {
                             echo '<td>' . htmlspecialchars($row['date']) . '</td>';
                             echo '<td>';
                             echo '<div class="d-flex gap-2">';
+                            $status_class = $row['account_status'] == 'Pending' ? 'warning text-dark' : 'success';
+                            $pend_selected = $row['account_status'] == 'Pending' ? 'selected' : '';
+                            $approv_selected = $row['account_status'] == 'Approved' ? 'selected' : '';
+                            echo '<select class="badge bg-'.$status_class.'  rounded" onchange="changeStatus(event, '.$row['u_id'].')">
+                                <option value="Pending" '.$pend_selected.'>Pending</option>
+                                <option value="Approved" '.$approv_selected.'>Approved</option>
+                            </select>';
                             echo '<a href="'.$_SERVER['REQUEST_URI'].'?del=' . $row['u_id'] . '" class="btn btn-danger btn-sm fw-bold" onclick="return confirm(`Are you sure to delete?`)">'
                                 . '<i class="fas fa-trash"></i> Delete</a>';
                             echo '</div>';
@@ -75,7 +82,19 @@ if (isset($_GET['res_id'])) {
                 </table>
             </div>
         </div>
-
+        <script>
+            async function changeStatus(e, u_id){
+                const response = await fetch(`/zerowaste/admin/actions/change_status.php?status=${e.target.value}&id=${u_id}`,
+                    {
+                        method: "POST"
+                    }
+                );
+                const response_ = await response.json();
+                if(response_.status){
+                    window.location.href = "<?= $_SERVER['REQUEST_URI'] ?>";
+                }
+            }
+        </script>
         <?php
     }
 }

@@ -12,22 +12,25 @@ if (isset($_POST['submit'])) {
         $loginquery = "SELECT * FROM users WHERE username='$username' AND password='$hashedPassword'";
         $result = mysqli_query($db, $loginquery);
         $row = mysqli_fetch_array($result);
-
         if (is_array($row)) {
-            $check_restaurant = $db->query("SELECT * FROM restaurant WHERE user_id = " . (int) $_SESSION['user_id'] . "");
-            if (mysqli_num_rows($check_restaurant) > 0) {
-                $res = mysqli_fetch_assoc($check_restaurant);
-                $_SESSION['rs_id'] = $res['rs_id'];
-                $_SESSION['rs_name'] = $res['title'];
+            if ($row['account_status'] == 'Approved') {
+                $check_restaurant = $db->query("SELECT * FROM restaurant WHERE user_id = " . (int) $_SESSION['user_id'] . "");
+                if (mysqli_num_rows($check_restaurant) > 0) {
+                    $res = mysqli_fetch_assoc($check_restaurant);
+                    $_SESSION['rs_id'] = $res['rs_id'];
+                    $_SESSION['rs_name'] = $res['title'];
+                }
+                $_SESSION["user_id"] = $row['u_id'];
+                $_SESSION['user_role'] = $row['role'];
+                if ($row['role'] === 'shop') {
+                    header("refresh:1;url=shop.php");
+                } else {
+                    header("refresh:1;url=index.php");
+                }
+                exit();
+            }else{
+                $message = "Your Account is under approval of our Admin.";
             }
-            $_SESSION["user_id"] = $row['u_id'];
-            $_SESSION['user_role'] = $row['role'];
-            if ($row['role'] === 'shop') {
-                header("refresh:1;url=shop.php");
-            } else {
-                header("refresh:1;url=index.php");
-            }
-            exit();
         } else {
             $message = "Invalid Username or Password!";
         }

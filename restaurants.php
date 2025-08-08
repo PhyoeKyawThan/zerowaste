@@ -7,16 +7,23 @@ if (isset($_GET['res_id'])) {
 } else {
     ?>
     <div class="page-wrapper">
-        <div class="top-links">
-            <div class="container">
-                <ul class="row links">
+        <?php
+       
+        if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'shop'):
+            echo '';
+        else:
+            ?>
+            <div class="top-links">
+                <div class="container">
+                    <ul class="row links">
 
-                    <li class="col-xs-12 col-sm-4 link-item active"><span>1</span><a href="#">Choose Shop</a></li>
-                    <li class="col-xs-12 col-sm-4 link-item"><span>2</span><a href="#">Pick Your food</a></li>
-                    <li class="col-xs-12 col-sm-4 link-item"><span>3</span><a href="#">Reserve & Claim</a></li>
-                </ul>
+                        <li class="col-xs-12 col-sm-4 link-item active"><span>1</span><a href="#">Choose Shop</a></li>
+                        <li class="col-xs-12 col-sm-4 link-item"><span>2</span><a href="#">Pick Your food</a></li>
+                        <li class="col-xs-12 col-sm-4 link-item"><span>3</span><a href="#">Reserve & Claim</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
+        <?php endif; ?>
         <div class="inner-page-hero bg-image" data-image-src="images/img/pimg.jpg">
             <div class="container"> </div>
         </div>
@@ -77,6 +84,6 @@ if (isset($_GET['res_id'])) {
             </div>
     </div>
     </section>
-
-<?php print_r($_SESSION['cart_item']);}
+    <?php
+}
 include 'parts/end.php'; ?>
