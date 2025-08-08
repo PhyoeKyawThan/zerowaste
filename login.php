@@ -158,7 +158,7 @@ include 'parts/start.php';
             <div class="col-12">
                 <div class="login-container">
                     <h2 class="page-title">Login to Your Account</h2>
-
+                    <?= isset($_GET['msg']) ? urldecode($_GET['msg']) : '' ?>
                     <?php if (isset($message)) { ?>
                         <div class="error-message"><?php echo $message; ?></div>
                     <?php } ?>
