@@ -18,8 +18,13 @@ if (isset($_GET['res_id'])) {
         $id = (int) $_GET['del'];
         $result = mysqli_prepare($db, "DELETE FROM users WHERE u_id = ?");
         $result->bind_param('i', $id);
-        mysqli_execute($result);
-        header("Location: users.php");
+        // mysqli_execute($result);
+        if ($result->execute()) {
+            $msg = urlencode('<div class="alert alert-success text-center">User deleted successfully!</div>');
+        } else {
+            $msg = urlencode('<div class="alert alert-danger text-center">Failed to delete user.</div>');
+        }
+        header("Location: users.php?msg={$msg}");
         exit();
     } else {
         ?>
@@ -29,6 +34,11 @@ if (isset($_GET['res_id'])) {
             <form action="" method="get" class="form">
                 <input type="search" name="s" id="" class="form-control mb-1" placeholder="Search User">
             </form>
+            <?php
+            if (isset($_GET['msg'])) {
+                echo urldecode($_GET['msg']);
+            }
+            ?>
             <div class="table-responsive">
                 <table class="table table-striped align-middle">
                     <thead class="table-dark">
@@ -56,22 +66,22 @@ if (isset($_GET['res_id'])) {
                             echo '<td>' . htmlspecialchars($row['email']) . '</td>';
                             echo '<td>' . htmlspecialchars($row['phone']) . '</td>';
                             $role = $row['role'] == 'shop' ?
-                             isset($row['rs_id']) ?
-                              '<a class="badge bg-primary rounded-pill text-decoration-none" href="restaurants.php?res_id='.$row['rs_id'].'&from=users.php">'.htmlspecialchars($row['role']).'</a>'
-                              : '<span class="badge bg-secondary rounded-pill">'.$row['role'].'</span>'
-                             : '<span class="badge bg-primary rounded-pill">'.$row['role'].'</span>';
-                            echo '<td>' . $role .'</td>';
+                                isset($row['rs_id']) ?
+                                '<a class="badge bg-primary rounded-pill text-decoration-none" href="restaurants.php?res_id=' . $row['rs_id'] . '&from=users.php">' . htmlspecialchars($row['role']) . '</a>'
+                                : '<span class="badge bg-secondary rounded-pill">' . $row['role'] . '</span>'
+                                : '<span class="badge bg-primary rounded-pill">' . $row['role'] . '</span>';
+                            echo '<td>' . $role . '</td>';
                             echo '<td>' . htmlspecialchars($row['date']) . '</td>';
                             echo '<td>';
                             echo '<div class="d-flex gap-2">';
                             $status_class = $row['account_status'] == 'Pending' ? 'warning text-dark' : 'success';
                             $pend_selected = $row['account_status'] == 'Pending' ? 'selected' : '';
                             $approv_selected = $row['account_status'] == 'Approved' ? 'selected' : '';
-                            echo '<select class="badge bg-'.$status_class.'  rounded" onchange="changeStatus(event, '.$row['u_id'].')">
-                                <option value="Pending" '.$pend_selected.'>Pending</option>
-                                <option value="Approved" '.$approv_selected.'>Approved</option>
+                            echo '<select class="badge bg-' . $status_class . '  rounded" onchange="changeStatus(event, ' . $row['u_id'] . ')">
+                                <option value="Pending" ' . $pend_selected . '>Pending</option>
+                                <option value="Approved" ' . $approv_selected . '>Approved</option>
                             </select>';
-                            echo '<a href="'.$_SERVER['REQUEST_URI'].'?del=' . $row['u_id'] . '" class="btn btn-danger btn-sm fw-bold" onclick="return confirm(`Are you sure to delete?`)">'
+                            echo '<a href="' . $_SERVER['REQUEST_URI'] . '?del=' . $row['u_id'] . '" class="btn btn-danger btn-sm fw-bold" onclick="return confirm(`Are you sure to delete?`)">'
                                 . '<i class="fas fa-trash"></i> Delete</a>';
                             echo '</div>';
                             echo '</td>';
@@ -83,14 +93,14 @@ if (isset($_GET['res_id'])) {
             </div>
         </div>
         <script>
-            async function changeStatus(e, u_id){
+            async function changeStatus(e, u_id) {
                 const response = await fetch(`/zerowaste/admin/actions/change_status.php?status=${e.target.value}&id=${u_id}`,
                     {
                         method: "POST"
                     }
                 );
                 const response_ = await response.json();
-                if(response_.status){
+                if (response_.status) {
                     window.location.href = "<?= $_SERVER['REQUEST_URI'] ?>";
                 }
             }

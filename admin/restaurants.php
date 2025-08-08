@@ -17,15 +17,27 @@ if (isset($_GET['res_id'])) {
     }
     if (isset($_GET['del'])) {
         $id = (int) $_GET['del'];
+
         $result = mysqli_prepare($db, "DELETE FROM restaurant WHERE rs_id = ?");
         $result->bind_param('i', $id);
-        mysqli_execute($result);
-        header("Location: restaurants.php");
+
+        if ($result->execute()) {
+            $msg = urlencode('<div class="alert alert-success text-center">Restaurant deleted successfully!</div>');
+        } else {
+            $msg = urlencode('<div class="alert alert-danger text-center">Failed to delete restaurant.</div>');
+        }
+        $result->close();
+        header("Location: restaurants.php?msg={$msg}");
         exit();
     } else {
         ?>
         <div class="container">
             <h2 class="text-primary"><i class="fas fa-shop"></i> Restaurants</h2>
+            <?php
+            if (isset($_GET['msg'])) {
+                echo urldecode($_GET['msg']);
+            }
+            ?>
             <hr>
             <form action="" method="get" class="form">
                 <input type="search" name="s" id="" class="form-control mb-1" placeholder="Search Restaurant">
@@ -60,7 +72,7 @@ if (isset($_GET['res_id'])) {
                             echo '<td>' . htmlspecialchars($row['phone']) . '</td>';
                             echo '<td>' . htmlspecialchars($row['url']) . '</td>';
                             echo '<td>' . htmlspecialchars($row['o_days']) . '</td>';
-                
+
                             $dish_q = mysqli_query($db, "SELECT COUNT(*) AS total FROM dishes WHERE rs_id = " . intval($row['rs_id']));
                             $dish_count = mysqli_fetch_assoc($dish_q)['total'];
 

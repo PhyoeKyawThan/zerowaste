@@ -13,32 +13,26 @@ if (empty($_SESSION["user_id"])) {
 }
 
 if (isset($_POST['submit'])) {
-    $pickup_time = $_POST['pickup_time'];
 
-    $time = strtotime($pickup_time);
-    $hour = date('H', $time);
 
-    if ($hour < 10 || $hour >= 22) {
-        $error = "Pickup time must be between 10:00 AM and 10:00 PM";
-    } else {
-        foreach ($_SESSION["cart_item"] as $item) {
-            $d_id = intval($item['d_id']);
-            $quantity = intval($item["quantity"]);
-            $user_id = intval($_SESSION["user_id"]);
+    foreach ($_SESSION["cart_item"] as $item) {
+        $d_id = intval($item['d_id']);
+        $quantity = intval($item["quantity"]);
+        $user_id = intval($_SESSION["user_id"]);
 
-            $SQL = "INSERT INTO users_claims (u_id, d_id, quantity, pickup_time)
-                    VALUES ('$user_id', '$d_id', '$quantity', '$pickup_time')";
-            $update_dishes_stock = "UPDATE dishes set stock = stock - ? WHERE d_id = ?";
-            $prepare_dish_stock_update = mysqli_prepare($db, $update_dishes_stock);
-            $prepare_dish_stock_update->bind_param('ii', $quantity, $d_id);
-            if(mysqli_query($db, $SQL)){
-                $prepare_dish_stock_update->execute();
-            }
+        $SQL = "INSERT INTO users_claims (u_id, d_id, quantity)
+                    VALUES ('$user_id', '$d_id', '$quantity')";
+        $update_dishes_stock = "UPDATE dishes set stock = stock - ? WHERE d_id = ?";
+        $prepare_dish_stock_update = mysqli_prepare($db, $update_dishes_stock);
+        $prepare_dish_stock_update->bind_param('ii', $quantity, $d_id);
+        if (mysqli_query($db, $SQL)) {
+            $prepare_dish_stock_update->execute();
         }
-        unset($_SESSION["cart_item"]);
-        showSuccessAlert();
     }
+    unset($_SESSION["cart_item"]);
+    showSuccessAlert();
 }
+
 ?>
 
 <div class="page-wrapper">
@@ -96,17 +90,7 @@ if (isset($_POST['submit'])) {
                                                 }
                                             }
                                             ?>
-                                            <tr>
-                                                <td>
-                                                    <div class="form-group">
-                                                        <label for="pickup_time"><strong>Pickup Time:</strong></label>
-                                                        <input type="time" id="pickup_time" name="pickup_time"
-                                                            class="form-control" required>
-                                                        <small class="text-muted">Pickup time must be between 10:00 AM
-                                                            and 10:00 PM.</small>
-                                                    </div>
-                                                </td>
-                                            </tr>
+
                                             <tr>
                                                 <td class="text-color"><strong>Total Quantity</strong></td>
                                                 <td class="text-color"><strong><?php echo $item_total; ?></strong></td>

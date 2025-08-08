@@ -47,13 +47,11 @@ include 'parts/start.php';
                             while ($row = mysqli_fetch_assoc($query_res)) {
                                 $status = $row['status'];
                                 $statusBtn = '';
-                                if ($status == "" || $status == "NULL") {
-                                    $statusBtn = '<span class="badge p-1 rounded bg-info text-white"><i class="fa fa-bars"></i> Dispatch</span>';
-                                } elseif ($status == "in process") {
-                                    $statusBtn = '<span class="badge p-1 rounded bg-warning text-white"><i class="fa fa-cog fa-spin"></i> On The Way!</span>';
-                                } elseif ($status == "closed") {
+                                if ($status == "Pending" || $status == null) {
+                                    $statusBtn = '<span class="badge p-1 rounded bg-warning text-white"><i class="fa fa-cog fa-spin"></i> Pending</span>';
+                                } elseif ($status == "Delivered") {
                                     $statusBtn = '<span class="badge p-1 rounded bg-success text-white"><i class="fa fa-check-circle"></i> Delivered</span>';
-                                } elseif ($status == "rejected") {
+                                } elseif ($status == "Rejected") {
                                     $statusBtn = '<span class="badge p-1 rounded bg-danger text-white"><i class="fa fa-close"></i> Cancelled</span>';
                                 }
                                 $remark = $row['remark'] ?? 'Not viewed yet';
@@ -63,7 +61,7 @@ include 'parts/start.php';
                                     <td data-label="Qty">' . intval($row['quantity']) . '</td>
                                     <td class="p-2" data-label="Status">' . $statusBtn . '</td>
                                     
-                                    <td data-label="Pickup">' . htmlspecialchars($row['pickup_time']) . '</td>
+                                    <td data-label="Pickup">' . htmlspecialchars($row['pickup_time'] ?? ' - ') . '</td>
                                     <td class="d-none d-md-table-cell" data-label="Date">' . htmlspecialchars($row['date']) . '</td>
                                     <td class="d-none d-lg-table-cell" data-label="Restaurant Address">' . htmlspecialchars($row['address']) . '</td>
                                     <td data-label="Actions">

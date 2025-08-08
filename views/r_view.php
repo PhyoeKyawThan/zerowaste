@@ -221,9 +221,8 @@ else:
                                     <p><b>Website: </b><?php
                                         $url = $rows['url'];
                                         $headers = @get_headers($url);
-                                        print_r($headers);
                                         if($headers && strpos($headers[0], '200') !== false){
-                                            echo '<a href="'.$rows['url'].'">'.$rows['url'].'</a>';
+                                            echo '<a href="'.$rows['url'].'" class="text-white">'.$rows['url'].'</a>';
                                         }else{
                                             echo '---';
                                         }

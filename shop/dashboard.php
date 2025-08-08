@@ -129,18 +129,15 @@
                                             $status_class = '';
                                             $status_text = '';
                                             
-                                            if($claim['status'] == "" || $claim['status'] == "NULL") {
+                                            if($claim['status'] == "" || $claim['status'] == "Pending") {
                                                 $status_class = 'warning text-dark';
                                                 $status_text = 'Pending';
-                                            } elseif($claim['status'] == "in process") {
-                                                $status_class = 'info';
-                                                $status_text = 'In Process';
-                                            } elseif($claim['status'] == "closed") {
+                                            } elseif($claim['status'] == "Delivered") {
                                                 $status_class = 'success';
-                                                $status_text = 'Completed';
-                                            } elseif($claim['status'] == "rejected") {
+                                                $status_text = 'Delivered';
+                                            } elseif($claim['status'] == "Rejected") {
                                                 $status_class = 'danger';
-                                                $status_text = 'Rejected';
+                                                $status_text = 'Cancelled';
                                             }
                                             ?>
                                             <tr>

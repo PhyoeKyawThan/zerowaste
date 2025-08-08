@@ -21,6 +21,7 @@ if (isset($_POST['submit'])) {
                     $_SESSION['rs_name'] = $res['title'];
                 }
                 $_SESSION["user_id"] = $row['u_id'];
+                $_SESSION['user_name'] = $row['username'];
                 $_SESSION['user_role'] = $row['role'];
                 if ($row['role'] === 'shop') {
                     header("refresh:1;url=shop.php");

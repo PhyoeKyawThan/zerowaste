@@ -26,17 +26,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $status = trim($_POST['status']);
     $claim_id = (int) $_GET['id'];
     $remark = trim($_POST['remark']);
+    $pickuptime = $_POST['pickup_datetime'];
     if ($claim_id && $status) {
         include '../../../connection/connect.php';
         $query_str = "INSERT INTO remark(users_claims_id, status, remark) VALUES(?, ?, ?)";
         $update_sts = "UPDATE users_claims SET status = ? WHERE id = ?";
+        if($status == 'Delivered'){
+             $update_sts = "UPDATE users_claims SET status = ?, pickup_time = '".$pickuptime."' WHERE id = ?";
+        }
         $check_qry = "SELECT * FROM remark WHERE users_claims_id = ?";
         $update = mysqli_prepare($db, $update_sts);
         mysqli_stmt_bind_param($update, "si", $status, $claim_id);
         if (mysqli_execute($update)) {
-             if($status == 'rejected'){
+            if ($status == 'Rejected') {
                 $stmt = mysqli_prepare($db, "UPDATE dishes SET stock = stock + ? WHERE d_id = ?");
-                $d_id =(int) $_GET['d_id'];
+                $d_id = (int) $_GET['d_id'];
                 $qty = (int) $_GET['qty'];
                 $stmt->bind_param('ii', $qty, $d_id);
                 $stmt->execute();
@@ -70,17 +74,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="card-header text-dark">
                 <h5 class="mb-0">Update Order Status</h5>
             </div>
+
             <div class="mb-3 row">
                 <label for="status" class="col-md-3 col-form-label fw-bold">Status</label>
                 <div class="col-md-9">
                     <select name="status" id="status" class="form-control" required>
                         <option value="" selected disabled>Select Status</option>
-                        <option value="in process">On the way</option>
-                        <option value="closed">Delivered</option>
-                        <option value="rejected">Cancelled</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Delivered">Delivered</option>
+                        <option value="Rejected">Cancelled</option>
                     </select>
                     <div class="invalid-feedback">
                         Please select a status
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="pickup_datetime" class="col-md-3 col-form-label fw-bold">Pickup Date & Time</label>
+                <div class="col-md-9">
+                    <input type="datetime-local" name="pickup_datetime" id="pickup_datetime" class="form-control"
+                        required>
+                    <div class="invalid-feedback">
+                        Please select pickup date & time
                     </div>
                 </div>
             </div>
@@ -107,8 +123,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         </div>
     </div>
-    </div>
 </form>
+
 
 <style>
     .card {

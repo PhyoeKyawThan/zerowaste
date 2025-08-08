@@ -15,9 +15,12 @@
                         echo '<li class="nav-item"><a href="login.php" class="nav-link active">Login</a> </li>
                                 <li class="nav-item"><a href="registration.php" class="nav-link active">Register</a> </li>';
                     } else {
-                        if($_SESSION['user_role'] == 'user')
+                        if ($_SESSION['user_role'] == 'user') {
+                            $username = $_SESSION['user_name'];
+                            $prefix_show = strtoupper($username[0]);
                             echo '<li class="nav-item"><a href="claims.php" class="nav-link active">My Claims</a> </li>';
-                        else
+                            echo '<li class="nav-item" style="width: 40px; text-align: center"><a href="user.php" class="nav-link active bg-primary text-weight-bold" style="padding: 3px; border-radius: 50%;">'.$prefix_show.'</a> </li>';
+                        } else
                             echo '<li class="nav-item"><a href="shop.php" class="nav-link active">My Shop</a> </li>';
                         echo '<li class="nav-item"><a href="logout.php" class="nav-link active">Logout</a> </li>';
                     }

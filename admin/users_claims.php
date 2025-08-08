@@ -65,13 +65,11 @@ if (isset($_GET['del'])) {
                     echo '<td>' . htmlspecialchars($row['quantity']) . '</td>';
                     $status = $row['status'];
 
-                    if ($status == "" || $status == "NULL") {
-                        echo '<td><button type="button" class="btn btn-info"><span class="fa fa-bars"></span> Dispatch</button></td>';
-                    } elseif ($status == "in process") {
-                        echo '<td><button type="button" class="btn btn-warning"><span class="fa fa-cog fa-spin"></span> On The Way!</button></td>';
-                    } elseif ($status == "closed") {
+                    if ($status == "Pending") {
+                        echo '<td><button type="button" class="btn btn-warning"><span class="fa fa-cog fa-spin"></span> Pending</button></td>';
+                    } elseif ($status == "Delivered") {
                         echo '<td><button type="button" class="btn btn-primary"><span class="fa fa-check-circle"></span> Delivered</button></td>';
-                    } elseif ($status == "rejected") {
+                    } elseif ($status == "Rejected") {
                         echo '<td><button type="button" class="btn btn-danger"><i class="fa fa-close"></i> Cancelled</button></td>';
                     }
                     echo '<td>' . htmlspecialchars($row['date']) . '</td>';
