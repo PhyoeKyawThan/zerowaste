@@ -311,7 +311,7 @@ else:
 
                             <div class="collapse in" id="popular2">
                                 <?php
-                                $stmt = $db->prepare("SELECT * FROM dishes WHERE rs_id = ?");
+                                $stmt = $db->prepare("SELECT * FROM dishes WHERE rs_id = ? AND status = 'Approved'");
                                 $stmt->bind_param('i', $_GET['res_id']);
                                 $stmt->execute();
                                 $products = $stmt->get_result();
