@@ -48,7 +48,7 @@
                                         <h3 class="dish-title">' . htmlspecialchars($rows['title']) . '</h3>
                                         <p class="dish-description">' . htmlspecialchars($rows['slogan']) . '</p>
                                         <p class="dish-stock"><strong>Stock:</strong> ' . $rows['stock'] . '</p>
-                                        <p><strong>Status: </strong><span class="badge bg-'.$status_class.' text-white rounded" style="padding: 4px 10px;">'.$rows['status'].'</span></p>
+                                        <p><strong>Admin Approval Status: </strong><span class="badge bg-'.$status_class.' text-white rounded" style="padding: 4px 10px;">'.$rows['status'].'</span></p>
                                         <div class="dish-actions">
                                             <a href="shop.php?p=ed&d_id=' . $rows['d_id'] . '" class="btn btn-edit"><i class="fa fa-edit"></i> Edit</a>
                                             <a href="shop.php?p=dishes&dd=' . $rows['d_id'] . '" class="btn btn-delete" onclick="return confirm(\'Are you sure you want to delete this dish?\')"><i class="fa fa-trash-o"></i> Delete</a>
