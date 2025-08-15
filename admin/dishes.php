@@ -44,6 +44,8 @@ if (isset($_GET['dId'])) {
                                 <th scope="col">Dish</th>
                                 <th scope="col">Category</th>
                                 <th scope="col">Stock</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Discount (%)</th>
                                 <th scope="col">Created</th>
                                 <th scope="col">Actions</th>
                             </tr>
@@ -58,6 +60,8 @@ if (isset($_GET['dId'])) {
                                 echo '<td>' . htmlspecialchars($row['title']) . '</td>';
                                 echo '<td>' . htmlspecialchars($row['c_name']) . '</td>';
                                 echo '<td>' . htmlspecialchars($row['stock']) . '</td>';
+                                echo '<td>' . htmlspecialchars($row['price']) . '</td>';
+                                echo '<td>' . htmlspecialchars($row['discount']) . '%</td>';
                                 echo '<td>' . htmlspecialchars($row['created_at']) . '</td>';
 
                                 echo '<td>';

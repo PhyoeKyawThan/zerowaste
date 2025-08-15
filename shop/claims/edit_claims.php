@@ -9,7 +9,7 @@
                     
                     <div class="card-body">
                         <?php
-                        $sql = "SELECT users.*, users_claims.* , dishes.title, dishes.stock
+                        $sql = "SELECT users.*, users_claims.* , dishes.title, dishes.stock, dishes.price, dishes.discount
                                 FROM users 
                                 INNER JOIN users_claims ON users.u_id = users_claims.u_id JOIN dishes ON dishes.d_id = users_claims.d_id
                                 WHERE id='".mysqli_real_escape_string($db, $_GET['id'])."'";
@@ -56,6 +56,22 @@
                                     <tr>
                                         <th>Available Stock: </th>
                                         <td colspan="2"><?php echo $row['stock'] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Price : </th>
+                                        <td colspan="2"><?php echo $row['price'] ?></td>
+                                    </tr>
+                                    <?php if($row['discount'] > 0): ?>
+                                    <tr>
+                                        <th>Discount: </th>
+                                        <td colspan="2"><?php echo $row['discount'] ?>%</td>
+                                    </tr>
+                                    <?php endif; ?>
+                                    <tr>
+                                        <th>Total Price: </th>
+                                        <td colspan="2"><?php
+                                        $price = $row["price"] - ($row["price"] * ($row["discount"] / 100));
+                                        echo $price * $row['quantity'] ?></td>
                                     </tr>
                                     
                                     <tr>

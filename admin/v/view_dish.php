@@ -34,6 +34,9 @@ $dish = $result->fetch_assoc();
                 <p><strong>Category:</strong> <?= htmlspecialchars($dish['c_name']) ?></p>
                 <p><strong>Restaurant:</strong> <?= htmlspecialchars($dish['rs_title']) ?></p>
                 <p><strong>Stock:</strong> <?= htmlspecialchars($dish['stock']) ?></p>
+                <p><strong>Price:</strong> <?= htmlspecialchars($dish['price']) ?></p>
+                <p><strong>Discount:</strong> <?= htmlspecialchars($dish['discount']) ?>%</p>
+                <p><strong>Discount Price:</strong> <?=  $dish["price"] - ($dish["price"] * ($dish["discount"] / 100)); ?></p>
                 <p><strong>Created At:</strong> <?= htmlspecialchars($dish['created_at']) ?></p>
 
                 <hr>

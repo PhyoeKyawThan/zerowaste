@@ -21,7 +21,9 @@ function addToCart($db, $productId, $quantity)
             'title' => $product->title,
             'd_id' => $product->d_id,
             'quantity' => $quantity,
-            'stock' => $product->stock
+            'stock' => $product->stock,
+            'price' => $product->price,
+            'discount'=> $product->discount,
         ]
     ];
 

@@ -13,8 +13,6 @@ if (empty($_SESSION["user_id"])) {
 }
 
 if (isset($_POST['submit'])) {
-
-
     foreach ($_SESSION["cart_item"] as $item) {
         $d_id = intval($item['d_id']);
         $quantity = intval($item["quantity"]);
@@ -65,6 +63,7 @@ if (isset($_POST['submit'])) {
                                         <tbody>
                                             <?php
                                             $item_total = 0;
+                                            $total_price = 0;
                                             if (!empty($_SESSION["cart_item"])) {
                                                 foreach ($_SESSION["cart_item"] as $item) {
                                                     $item_total += intval($item["quantity"]);
@@ -84,6 +83,23 @@ if (isset($_POST['submit'])) {
                                                                         value="<?php echo intval($item['quantity']); ?>">
                                                                 </div>
                                                             </div>
+                                                            <div class="form-group row no-gutter">
+                                                                <div class="col-xs-8">
+                                                                    <input type="text" class="form-control b-r-0"
+                                                                        value="Price" readonly>
+                                                                </div>
+                                                                <div class="col-xs-4">
+                                                                    <input class="form-control" type="text" readonly
+                                                                        value="<?php 
+                                                                            $price = $item['price'];
+                                                                            if($item['discount'] > 0){
+                                                                                $price = $item["price"] - ($item["price"] * ($item["discount"] / 100));
+                                                                            }
+                                                                            $total_price += $price * $item['quantity'];
+                                                                            echo $price * $item['quantity'];
+                                                                        ?>">
+                                                                </div>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                     <?php
@@ -94,6 +110,10 @@ if (isset($_POST['submit'])) {
                                             <tr>
                                                 <td class="text-color"><strong>Total Quantity</strong></td>
                                                 <td class="text-color"><strong><?php echo $item_total; ?></strong></td>
+                                            </tr>
+                                             <tr>
+                                                <td class="text-color"><strong>Total Price</strong></td>
+                                                <td class="text-color"><strong><?php echo $total_price; ?></strong></td>
                                             </tr>
                                         </tbody>
                                     </table>

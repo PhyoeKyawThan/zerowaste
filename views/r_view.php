@@ -137,7 +137,7 @@ else:
             justify-content: center;
         }
 
-        #price-section {
+        #price-section{
             display: flex;
             justify-content: center;
             align-items: center;
@@ -254,10 +254,12 @@ else:
                             <div class="widget-body">
                                 <?php
                                 $item_total = 0;
+                                $total_price = 0;
                                 if (!empty($_SESSION["cart_item"])) {
                                     foreach ($_SESSION["cart_item"] as $item) {
                                         $item_total += intval($item["quantity"]);
                                         $discounted_price = $item["price"] - ($item["price"] * ($item["discount"] / 100));
+                                        $total_price += $discounted_price * $item['quantity'];
                                         ?>
                                         <div class="title-row">
                                             <?php echo htmlspecialchars($item["title"]); ?>
@@ -277,7 +279,7 @@ else:
                                             </div>
                                         </div>
                                         <div class="price-wrap text-xs-center">
-                                            <p>Price: <strong><?php echo number_format($discounted_price, 2); ?></strong></p>
+                                            <p>Price: <strong><?php echo number_format($discounted_price * $item['quantity'], 2); ?></strong></p>
                                         </div>
                                         <?php
                                     }
@@ -291,7 +293,7 @@ else:
                         <div class="widget-body">
                             <div class="price-wrap text-xs-center">
                                 <p>TOTAL CLAIM FOOD</p>
-                                <h3 class="value"><strong><?php echo $item_total; ?></strong></h3>
+                                <h4 class="value"><strong><?php echo 'Total Dishes - '.$item_total; echo '<br>Total Price - '.$total_price ?></strong></h4>
 
                                 <?php if ($item_total == 0) { ?>
                                     <a href="restaurants.php?res_id=<?php echo intval($_GET['res_id']); ?>&action=confirm"
@@ -347,24 +349,10 @@ else:
                                                 </div>
                                                 <div class="d-flex flex-direction-col pull-right item-cart-info" id="price-section">
                                                     <span class="price pull-left">Price:
-                                                        <?php if ($product['discount'] > 0): ?>
-                                                            <span style="text-decoration: line-through; color: gray;">
-                                                                <?= number_format($product['price'], 2) ?>
-                                                            </span>
-                                                            <span style="color: red; font-weight: bold; margin-left: 5px;">
-                                                                <?= number_format($discounted_price, 2) ?>
-                                                            </span>
-                                                        <?php else: ?>
-                                                            <?= number_format($product['price'], 2) ?>
-                                                        <?php endif; ?>
-                                                    </span> |
-
+                                                        <?= number_format($discounted_price, 2) ?></span>
                                                     <span>Discount: <?= htmlspecialchars($product['discount']) ?>%</span>
-
-                                                    <span class="price pull-left" id="s-<?= $product['d_id'] ?>">
-                                                        <?php echo "Stock: " . htmlspecialchars($product['stock']); ?>
-                                                    </span>
-
+                                                    <span class="price pull-left"
+                                                        id="s-<?= $product['d_id'] ?>"><?php echo "Stock: " . htmlspecialchars($product['stock']); ?></span>
                                                     <input class="b-r-0" type="number" name="quantity"
                                                         id="d-<?= $product['d_id'] ?>" min="1" max="<?= $product['stock'] ?>"
                                                         value="1"
@@ -376,7 +364,6 @@ else:
                                                         Add To Cart
                                                     </button>
                                                 </div>
-
                                             </form>
                                         </div>
                                     </div>
