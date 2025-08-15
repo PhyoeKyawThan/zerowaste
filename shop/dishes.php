@@ -41,21 +41,50 @@
                                 echo '<p class="no-data">No Menu</p>';
                             } else {
                                 while ($rows = mysqli_fetch_array($query)) {
-                                    $status_class = $rows['status'] == 'Pending' ? 'warning text-dark' : ($rows['status'] == 'Approved' ? 'success' : 'danger');
+                                    $o_price = $rows['price'];
+                                    $discounted_price = $rows['discount'] > 0
+                                        ? $rows['price'] - ($rows['price'] * ($rows['discount'] / 100))
+                                        : $rows['price'];
+
+                                    $status_class = $rows['status'] == 'Pending'
+                                        ? 'warning text-dark'
+                                        : ($rows['status'] == 'Approved' ? 'success' : 'danger');
+
                                     echo '<div class="dish-card">
-                                    <img src="/zerowaste/uploads/dishes/' . $rows['img'] . '" alt="' . htmlspecialchars($rows['title']) . '" class="dish-image" />
-                                    <div class="dish-info">
-                                        <h3 class="dish-title">' . htmlspecialchars($rows['title']) . '</h3>
-                                        <p class="dish-description">' . htmlspecialchars($rows['slogan']) . '</p>
-                                        <p class="dish-stock"><strong>Stock:</strong> ' . $rows['stock'] . '</p>
-                                        <p><strong>Admin Approval Status: </strong><span class="badge bg-'.$status_class.' text-white rounded" style="padding: 4px 10px;">'.$rows['status'].'</span></p>
-                                        <div class="dish-actions">
-                                            <a href="shop.php?p=ed&d_id=' . $rows['d_id'] . '" class="btn btn-edit"><i class="fa fa-edit"></i> Edit</a>
-                                            <a href="shop.php?p=dishes&dd=' . $rows['d_id'] . '" class="btn btn-delete" onclick="return confirm(\'Are you sure you want to delete this dish?\')"><i class="fa fa-trash-o"></i> Delete</a>
-                                        </div>
-                                    </div>
-                                    </div>';
+        <img src="/zerowaste/uploads/dishes/' . $rows['img'] . '" alt="' . htmlspecialchars($rows['title']) . '" class="dish-image" />
+        <div class="dish-info">
+            <h3 class="dish-title">' . htmlspecialchars($rows['title']) . '</h3>
+            <p class="dish-description">' . htmlspecialchars($rows['slogan']) . '</p>';
+
+                                   
+                                    echo '<p class="dish-stock"><strong>Price:</strong> ';
+                                    if ($rows['discount'] > 0) {
+                                        echo '<span style="text-decoration: line-through; color: gray;">' . number_format($o_price, 2) . '</span> 
+              <span style="color: red; font-weight: bold; margin-left: 5px;">' . number_format($discounted_price, 2) . '</span>';
+                                    } else {
+                                        echo number_format($o_price, 2);
+                                    }
+                                    echo '</p>';
+
+                                    
+                                    echo '<p class="dish-stock"><strong>Discount:</strong> ' . $rows['discount'] . '%</p>';
+
+                                  
+                                    echo '<p class="dish-stock"><strong>Stock:</strong> ' . $rows['stock'] . '</p>';
+
+                                   
+                                    echo '<p><strong>Admin Approval Status: </strong>
+        <span class="badge bg-' . $status_class . ' text-white rounded" style="padding: 4px 10px;">' . $rows['status'] . '</span></p>';
+
+                                   
+                                    echo '<div class="dish-actions">
+        <a href="shop.php?p=ed&d_id=' . $rows['d_id'] . '" class="btn btn-edit"><i class="fa fa-edit"></i> Edit</a>
+        <a href="shop.php?p=dishes&dd=' . $rows['d_id'] . '" class="btn btn-delete" onclick="return confirm(\'Are you sure you want to delete this dish?\')"><i class="fa fa-trash-o"></i> Delete</a>
+    </div>
+    </div>
+    </div>';
                                 }
+
                             }
                             ?>
                         </div>

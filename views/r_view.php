@@ -137,7 +137,7 @@ else:
             justify-content: center;
         }
 
-        #price-section{
+        #price-section {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -346,36 +346,36 @@ else:
                                                     </div>
                                                 </div>
                                                 <div class="d-flex flex-direction-col pull-right item-cart-info" id="price-section">
-    <span class="price pull-left">Price:
-        <?php if ($product['discount'] > 0): ?>
-            <span style="text-decoration: line-through; color: gray;">
-                <?= number_format($product['price'], 2) ?>
-            </span>
-            <span style="color: red; font-weight: bold; margin-left: 5px;">
-                <?= number_format($discounted_price, 2) ?>
-            </span>
-        <?php else: ?>
-            <?= number_format($product['price'], 2) ?>
-        <?php endif; ?>
-    </span> | 
+                                                    <span class="price pull-left">Price:
+                                                        <?php if ($product['discount'] > 0): ?>
+                                                            <span style="text-decoration: line-through; color: gray;">
+                                                                <?= number_format($product['price'], 2) ?>
+                                                            </span>
+                                                            <span style="color: red; font-weight: bold; margin-left: 5px;">
+                                                                <?= number_format($discounted_price, 2) ?>
+                                                            </span>
+                                                        <?php else: ?>
+                                                            <?= number_format($product['price'], 2) ?>
+                                                        <?php endif; ?>
+                                                    </span> |
 
-    <span>Discount: <?= htmlspecialchars($product['discount']) ?>%</span>
+                                                    <span>Discount: <?= htmlspecialchars($product['discount']) ?>%</span>
 
-    <span class="price pull-left" id="s-<?= $product['d_id'] ?>">
-        <?php echo "Stock: " . htmlspecialchars($product['stock']); ?>
-    </span>
+                                                    <span class="price pull-left" id="s-<?= $product['d_id'] ?>">
+                                                        <?php echo "Stock: " . htmlspecialchars($product['stock']); ?>
+                                                    </span>
 
-    <input class="b-r-0" type="number" name="quantity"
-        id="d-<?= $product['d_id'] ?>" min="1" max="<?= $product['stock'] ?>"
-        value="1"
-        style="width:60px; <?= isset($_SESSION['rs_id']) ? "display: none;" : '' ?>" />
+                                                    <input class="b-r-0" type="number" name="quantity"
+                                                        id="d-<?= $product['d_id'] ?>" min="1" max="<?= $product['stock'] ?>"
+                                                        value="1"
+                                                        style="width:60px; <?= isset($_SESSION['rs_id']) ? "display: none;" : '' ?>" />
 
-    <button type="button" class="btn theme-btn"
-        style="<?= isset($_SESSION['rs_id']) ? "display: none;" : '' ?>"
-        onclick="addToCart(<?= $product['d_id'] ?>)">
-        Add To Cart
-    </button>
-</div>
+                                                    <button type="button" class="btn theme-btn"
+                                                        style="<?= isset($_SESSION['rs_id']) ? "display: none;" : '' ?>"
+                                                        onclick="addToCart(<?= $product['d_id'] ?>)">
+                                                        Add To Cart
+                                                    </button>
+                                                </div>
 
                                             </form>
                                         </div>
