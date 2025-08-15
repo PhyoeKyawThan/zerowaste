@@ -42,7 +42,7 @@ if (isset($_POST['submit'])) {
         if (empty($error)) {
             $query = "INSERT INTO dishes (rs_id, title, slogan, img, stock, price, discount) VALUES (?, ?, ?, ?, ?, ?, ?)";
             $stmt = mysqli_prepare($db, $query);
-            mysqli_stmt_bind_param($stmt, 'isssi', $res_id, $d_name, $about, $unique_name, $stock, $price, $discount);
+            mysqli_stmt_bind_param($stmt, 'isssiii', $res_id, $d_name, $about, $unique_name, $stock, $price, $discount);
 
             if (mysqli_stmt_execute($stmt)) {
                 $success = '<strong>New dish added successfully.</strong>';

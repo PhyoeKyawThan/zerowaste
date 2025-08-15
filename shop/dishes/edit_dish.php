@@ -18,6 +18,8 @@ if (isset($_POST['submit'])) {
     $d_name = trim($_POST['d_name']);
     $about = trim($_POST['about']);
     $stock = (int)$_POST['stock'];
+    $price = (int) $_POST['price'];
+    $discount = (int) $_POST['discount'];
     $res_id = $_SESSION['rs_id'];
     $image_filename = $d['img'];
 
@@ -51,9 +53,9 @@ if (isset($_POST['submit'])) {
 
        
         if (empty($error)) {
-            $query = "UPDATE dishes SET title = ?, slogan = ?, stock = ?, img = ?, rs_id = ? WHERE d_id = ?";
+            $query = "UPDATE dishes SET title = ?, slogan = ?, stock = ?, price = ?, discount = ?, img = ?, rs_id = ? WHERE d_id = ?";
             $stmt = mysqli_prepare($db, $query);
-            mysqli_stmt_bind_param($stmt, 'ssissi', $d_name, $about, $stock, $image_filename, $res_id, $dish_id);
+            mysqli_stmt_bind_param($stmt, 'ssiiissi', $d_name, $about, $stock, $price, $discount, $image_filename, $res_id, $dish_id);
 
             if (mysqli_stmt_execute($stmt)) {
                 $success = '<strong>Dish updated successfully.</strong>';
@@ -61,6 +63,8 @@ if (isset($_POST['submit'])) {
                 $d['slogan'] = $about;
                 $d['stock'] = $stock;
                 $d['img'] = $image_filename;
+                $d['price'] = $price;
+                $d['discount'] = $discount;
             } else {
                 $error = '<strong>Database error. Please try again.</strong>';
             }
@@ -93,7 +97,15 @@ if (isset($_POST['submit'])) {
             <label for="stock" class="form-label">Stocks</label>
             <input type="number" id="stock" name="stock" value="<?= (int)($d['stock'] ?? 0) ?>" class="form-control" required>
         </div>
+        <div class="mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input type="number" id="price" value="<?= $d['price'] ?>" name="price" class="form-control" required>
+        </div>
 
+        <div class="mb-3">
+            <label for="discount" class="form-label">Discount</label>
+            <input type="number" id="discount" value="<?= $d['discount'] ?>" name="discount" class="form-control" required>
+        </div>
         <div class="mb-3">
             <label for="file" class="form-label">Dish Image</label>
             <input type="file" id="file" name="file" class="form-control" accept="image/*">
