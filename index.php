@@ -170,7 +170,7 @@ include 'parts/start.php';
                             <div class="restaurant-wrap">
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-3 col-md-12 col-lg-3 text-xs-center">
-                                        <a class="restaurant-logo" href="dishes.php?res_id=' . $rows['rs_id'] . '"> 
+                                        <a class="restaurant-logo" href="restaurants.php?res_id=' . $rows['rs_id'] . '"> 
                                             <img src="/zerowaste/uploads/' . $rows['image'] . '" alt="Restaurant logo"> 
                                         </a>
                                     </div>
