@@ -32,7 +32,14 @@ if (isset($_GET['del'])) {
     header("Location: users.php");
     exit();
 } else { ?>
-    <h2 class="text-primary">Users Claims</h2>
+    <h2 class="text-primary d-flex justify-content-between align-items-center">
+    Users Claims
+    <a href="user_claims_report.php" class="btn btn-success btn-sm">
+        <i class="fa fa-file-excel"></i> Monthly Report
+    </a>
+</h2>
+<hr>
+
     <hr>
 
     <form action="" method="get" class="form">
