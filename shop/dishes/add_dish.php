@@ -7,6 +7,8 @@ if (isset($_POST['submit'])) {
     $about = trim($_POST['about']);
     $res_id = $_SESSION['rs_id'];
     $stock = (int) $_POST['stock'];
+    $price = (int) $_POST['price'];
+    $discount = (int) $_POST['discount'];
 
     if (empty($d_name) || empty($about) || empty($res_id)) {
         $error = '<strong>All fields must be filled!</strong>';
@@ -38,9 +40,9 @@ if (isset($_POST['submit'])) {
         }
 
         if (empty($error)) {
-            $query = "INSERT INTO dishes (rs_id, title, slogan, img, stock) VALUES (?, ?, ?, ?, ?)";
+            $query = "INSERT INTO dishes (rs_id, title, slogan, img, stock, price, discount) VALUES (?, ?, ?, ?, ?, ?, ?)";
             $stmt = mysqli_prepare($db, $query);
-            mysqli_stmt_bind_param($stmt, 'isssi', $res_id, $d_name, $about, $unique_name, $stock);
+            mysqli_stmt_bind_param($stmt, 'isssi', $res_id, $d_name, $about, $unique_name, $stock, $price, $discount);
 
             if (mysqli_stmt_execute($stmt)) {
                 $success = '<strong>New dish added successfully.</strong>';
@@ -73,6 +75,16 @@ if (isset($_POST['submit'])) {
         <div class="mb-3">
             <label for="stock" class="form-label">Stock</label>
             <input type="number" id="stock" name="stock" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input type="number" id="price" name="price" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="discount" class="form-label">Discount</label>
+            <input type="number" id="discount" name="discount" class="form-control" required>
         </div>
 
         <div class="mb-3">
