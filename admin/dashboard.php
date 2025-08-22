@@ -84,30 +84,35 @@ include 'parts/start.php';
 $open_claims_query = "SELECT COUNT(*) AS open_count FROM users_claims WHERE status = 'Pending'";
 $closed_claims_query = "SELECT COUNT(*) AS closed_count FROM users_claims WHERE status = 'Approved'";
 $rejected_claims_query = "SELECT COUNT(*) AS rejected_count FROM users_claims WHERE status = 'Rejected'";
+$finished_claims_query ="SELECT COUNT(*) AS f_count FROM users_claims WHERE status = 'Finished'";
 
 $open_result = mysqli_query($db, $open_claims_query);
 $closed_result = mysqli_query($db, $closed_claims_query);
 $rejected_result = mysqli_query($db, $rejected_claims_query);
+$finished_result = mysqli_query($db, $finished_claims_query);
 
 $open_count = mysqli_fetch_assoc($open_result)['open_count'];
 $closed_count = mysqli_fetch_assoc($closed_result)['closed_count'];
 $rejected_count = mysqli_fetch_assoc($rejected_result)['rejected_count'];
+$finished_count = mysqli_fetch_assoc($finished_result)['f_count'];
 ?>
 
 <script>
     const ctx = document.getElementById('claimsPieChart');
     const claimsData = {
-        labels: ['Pending', 'Approved', 'Rejected'],
+        labels: ['Finished','Pending', 'Approved', 'Rejected'],
         datasets: [{
             label: 'Claim Status',
-            data: [<?php echo $open_count; ?>, <?php echo $closed_count; ?>, <?php echo $rejected_count; ?>],
+            data: [<?= $finished_count ?>, <?php echo $open_count; ?>, <?php echo $closed_count; ?>, <?php echo $rejected_count; ?>],
             backgroundColor: [
+                'rgba(3, 240, 11, 0.8)',
                 'rgba(255, 159, 64, 0.8)',
                 'rgba(75, 192, 192, 0.8)', 
                 'rgba(255, 99, 132, 0.8)'
             ],
             hoverBackgroundColor: [
-                'rgba(255, 159, 64, 1)',
+                'rgba(3, 240, 11, 0.8)',
+                'rgba(255, 159, 64, 0.8)',
                 'rgba(75, 192, 192, 1)',
                 'rgba(255, 99, 132, 1)'
             ],
