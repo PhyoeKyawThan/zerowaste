@@ -55,7 +55,7 @@ include 'parts/start.php';
 ?>
 <style>
    body {
-      background-image: url('images/img/pimg.jpg');
+      background-image: url('images/img/bg3.jpg');
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
@@ -178,7 +178,7 @@ include 'parts/start.php';
       <div class="row justify-content-center">
          <div class="col-12">
             <div class="registration-container">
-               <h2 class="page-title">Create Your Account</h2>
+               <h2 class="page-title">အကောင့်ကိုဖန်တီးပါ</h2>
                <?php if (!empty($errors)) { ?>
                   <div class="error-message">
                      <?php foreach ($errors as $error) { ?>
@@ -189,68 +189,62 @@ include 'parts/start.php';
                <form action="" method="post" id="registrationForm">
                   <div class="row">
                      <div class="form-group col-md-12">
-                        <label for="username">Username</label>
+                        <label for="username">အကောင့်အမည် </label>
                         <input class="form-control" type="text" name="username" id="username"
-                           placeholder="Enter your username">
+                           placeholder="အကောင့်အမည် ထည့်သွင်းပါ">
                         <div id="username-error" class="text-danger"></div>
                      </div>
                      <div class="form-group col-md-6">
-                        <label for="role">Register As</label>
+                        <label for="role">စာရင်းသွင်းမယ်</label>
                         <select name="role" class="form-control" id="role">
-                           <option value="user">Regular User</option>
-                           <option value="shop">Restaurant Owner</option>
+                           <option value="user">စားသုံးသူ</option>
+                           <option value="shop">စားသောက်ဆိုင်ပိုင်ရှင်</option>
                         </select>
                      </div>
                      <div class="form-group col-md-6">
-                        <label for="firstname">First Name</label>
+                        <label for="firstname">နာမည်</label>
                         <input class="form-control" type="text" name="firstname" id="firstname"
-                           placeholder="Enter your first name">
+                           placeholder="နာမည် ထည့်သွင်းပါ">
                         <div id="firstname-error" class="text-danger"></div>
                      </div>
                      <div class="form-group col-md-6">
-                        <label for="lastname">Last Name</label>
-                        <input class="form-control" type="text" name="lastname" id="lastname"
-                           placeholder="Enter your last name">
-                        <div id="lastname-error" class="text-danger"></div>
-                     </div>
-                     <div class="form-group col-md-6">
-                        <label for="email">Email Address</label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email">
+                        <label for="email">အီးမေးလ်လိပ်စာ</label>
+                        <input type="email" class="form-control" name="email" id="email" placeholder="အီးမေးလ်လိပ်စာ ထည့်သွင်းပါ">
                         <div id="email-error" class="text-danger"></div>
                      </div>
                      <div class="form-group col-md-6">
-                        <label for="phone">Phone Number</label>
+                        <label for="phone">ဖုန်းနံပါတ်</label>
                         <input class="form-control" type="tel" name="phone" id="phone"
-                           placeholder="Enter your phone number">
+                           placeholder="ဖုန်းနံပါတ် ထည့်သွင်းပါ">
                         <div id="phone-error" class="text-danger"></div>
                      </div>
                      <div class="form-group col-md-6">
-                        <label for="password">Password (min 6 characters)</label>
+                        <label for="password">စကားဝှက် (အနည်းဆုံး အက္ခရာ 8 လုံး)</label>
                         <input type="password" class="form-control" name="password" id="password"
-                           placeholder="Create a password">
+                           placeholder="စကားဝှက် တစ်ခု ဖန်တီးပါ">
                         <div id="password-error" class="text-danger"></div>
                      </div>
                      <div class="form-group col-md-6">
-                        <label for="cpassword">Confirm Password</label>
+                        <label for="cpassword">စကားဝှက်အတည်ပြုပါ</label>
                         <input type="password" class="form-control" name="cpassword" id="cpassword"
-                           placeholder="Confirm your password">
+                           placeholder="စကားဝှက်ကို အတည်ပြုပါ">
                         <div id="cpassword-error" class="text-danger"></div>
                      </div>
                      <div class="form-group col-md-12">
-                        <label for="address">Delivery Address</label>
+                        <label for="address">နေရပ်လိပ်စာ</label>
                         <textarea class="form-control" id="address" name="address" rows="3"
-                           placeholder="Enter your full address"></textarea>
+                           placeholder="နေရပ်လိပ်စာ အပြည့်အစုံ ထည့်သွင်းပါ"></textarea>
                         <div id="address-error" class="text-danger"></div>
                      </div>
                   </div>
                   <div class="row mt-3">
                      <div class="col-md-12 text-center">
                         <button type="submit" name="submit" class="btn btn-theme">
-                           <i class="fa fa-user-plus"></i> Register Now
+                           <i class="fa fa-user-plus"></i> ယခုပဲ စာရင်းသွင်းပါ
                         </button>
                      </div>
                      <div class="col-md-12">
-                        <p class="login-link">Already have an account? <a href="login.php">Login here</a></p>
+                        <p class="login-link">အကောင့်ရှိပြီးသားလား။ <a href="login.php">အကောင့်ဝင်ရောက်ပါ။</a></p>
                      </div>
                   </div>
                </form>
@@ -276,39 +270,33 @@ include 'parts/start.php';
 
          const username = document.getElementById('username').value.trim();
          if (username === '') {
-            showError('username-error', 'Username is required.');
+            showError('username-error', 'အကောင့်အမည် လိုအပ်သည်။');
             isValid = false;
          }
 
          const firstname = document.getElementById('firstname').value.trim();
          if (firstname === '') {
-            showError('firstname-error', 'First name is required.');
-            isValid = false;
-         }
-
-         const lastname = document.getElementById('lastname').value.trim();
-         if (lastname === '') {
-            showError('lastname-error', 'Last name is required.');
+            showError('firstname-error', 'နာမည် လိုအပ်သည်။');
             isValid = false;
          }
 
          const email = document.getElementById('email').value.trim();
          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
          if (email === '') {
-            showError('email-error', 'Email is required.');
+            showError('email-error', 'အီးမေးလ်လိပ်စာ လိုအပ်သည်။');
             isValid = false;
          } else if (!emailRegex.test(email)) {
-            showError('email-error', 'Please enter a valid email address.');
+            showError('email-error', 'ကျေးဇူးပြုပြီး မှန်ကန်သောအီးမေးလ်လိပ်စာတစ်ခုဖြည့်ပါ။');
             isValid = false;
          }
 
          const phone = document.getElementById('phone').value.trim();
          const phoneRegex = /^[0-9]{11}$/;
          if (phone === '') {
-            showError('phone-error', 'Phone number is required.');
+            showError('phone-error', 'ဖုန်းနံပါတ် လိုအပ်သည်။');
             isValid = false;
          } else if (!phoneRegex.test(phone)) {
-            showError('phone-error', 'Phone number must be exactly 10 digits.');
+            showError('phone-error', 'ဖုန်းနံပါတ်သည် ဂဏန်း ၁၀ လုံးတိတိ ဖြစ်ရပါမည်။');
             isValid = false;
          }
 
@@ -317,24 +305,24 @@ include 'parts/start.php';
          // Regex for strong password: at least 8 characters, one uppercase, one lowercase, one number, and one special character
          const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/;
          if (password === '') {
-            showError('password-error', 'Password is required.');
+            showError('password-error', 'စကားဝှက် လိုအပ်သည်။');
             isValid = false;
          } else if (!strongPasswordRegex.test(password)) {
-            showError('password-error', 'Password must be at least 8 characters and contain at least one uppercase letter, one lowercase letter, one number, and one special character (!@#$%^&*).');
+            showError('password-error', 'စကားဝှက်သည် အနည်းဆုံး အက္ခရာ 8 လုံးရှိရမည်ဖြစ်ပြီး အနည်းဆုံး စာလုံးအကြီးတစ်လုံး၊ စာလုံးသေးတစ်လုံး၊ နံပါတ်တစ်ခုနှင့် အထူးစာလုံးတစ်လုံး (!@#$%^&*) ပါဝင်ရမည်။');
             isValid = false;
          }
 
          const cpassword = document.getElementById('cpassword').value;
          if (cpassword === '') {
-            showError('cpassword-error', 'Please confirm your password.');
+            showError('cpassword-error', 'စကားဝှက်များ အတည်ပြုရန် လိုအပ်သည်။');
             isValid = false;
          } else if (cpassword !== password) {
-            showError('cpassword-error', 'Passwords do not match.');
+            showError('cpassword-error', 'စကားဝှက်များ မတိုက်ဆိုင်ပါ။');
             isValid = false;
          }
          const address = document.getElementById('address').value.trim();
          if (address === '') {
-            showError('address-error', 'Address is required.');
+            showError('address-error', 'နေရပ်လိပ်စာ လိုအပ်သည်။');
             isValid = false;
          }
 

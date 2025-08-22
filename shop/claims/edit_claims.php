@@ -4,7 +4,7 @@
             <div class="col-lg-8 w-100">
                 <div class="card shadow-sm" style="margin: auto; width: 75vw;">
                     <div class="card-header bg-primary text-white">
-                        <h4 class="mb-0 text-white">Order Details</h4>
+                        <h4 class="mb-0 text-white">အော်ဒါ အသေးစိတ်</h4>
                     </div>
                     
                     <div class="card-body">
@@ -17,7 +17,7 @@
                         $row = mysqli_fetch_array($query);
                         
                         if (!$row) {
-                            echo '<div class="alert alert-warning">Order not found</div>';
+                            echo '<div class="alert alert-warning">အော်ဒါမှာယူမှု မတွေ့ပါ။</div>';
                         } else {
                         ?>
                         
@@ -25,78 +25,76 @@
                             <table class="table table-borderless">
                                 <tbody>
                                     <tr>
-                                        <th width="30%">Username:</th>
+                                        <th width="30%">အကောင့်အမည် :</th>
                                         <td><?php echo htmlspecialchars($row['username']); ?></td>
                                         <td class="text-end">
                                             <?php if($row['status'] != 'rejected'): ?>
                                             <button type="button" class="btn btn-primary btn-sm" 
                                                     onclick="popUpWindow('shop/claims/forms/update_form.php?id=<?= $row['id'] ?>&qty=<?= $row['quantity'] ?>&d_id=<?= $row['d_id'] ?>')">
-                                                <i class="fas fa-edit"></i> Update Status
+                                                <i class="fas fa-edit"></i> အော်ဒါအခြေအနေ ပြင်မည်
                                             </button>
                                             <?php endif; ?>
                                         </td>
                                     </tr>
                                     
                                     <tr>
-                                        <th>Item:</th>
+                                        <th>အစားအသောက်စာရင်း : </th>
                                         <td><?php echo htmlspecialchars($row['title']); ?></td>
                                         <td class="text-end">
                                             <button type="button" class="btn btn-info btn-sm" 
                                                     onclick="popUpWindow('shop/claims/forms/claim_user.php?id=<?php echo htmlentities($row['id']); ?>')">
-                                                <i class="fas fa-user"></i> View User
+                                                <i class="fas fa-user"></i> စားသုံးသူကို ကြည့်မည်
                                             </button>
                                         </td>
                                     </tr>
                                     
                                     <tr>
-                                        <th>Quantity:</th>
+                                        <th>အရေအတွက် :</th>
                                         <td colspan="2"><?php echo intval($row['quantity']); ?></td>
                                     </tr>
                                     
                                     <tr>
-                                        <th>Available Stock: </th>
+                                        <th>ရနိုင်သော လက်ကျန်စာရင်း : </th>
                                         <td colspan="2"><?php echo $row['stock'] ?></td>
                                     </tr>
                                     <tr>
-                                        <th>Price : </th>
+                                        <th>စျေးနှုန်း : </th>
                                         <td colspan="2"><?php echo $row['price'] ?></td>
                                     </tr>
                                     <?php if($row['discount'] > 0): ?>
                                     <tr>
-                                        <th>Discount: </th>
+                                        <th>လျှော့စျေး : </th>
                                         <td colspan="2"><?php echo $row['discount'] ?>%</td>
                                     </tr>
                                     <?php endif; ?>
                                     <tr>
-                                        <th>Total Price: </th>
+                                        <th>စုစုပေါင်း စျေးနှုန်း : </th>
                                         <td colspan="2"><?php
                                         $price = $row["price"] - ($row["price"] * ($row["discount"] / 100));
                                         echo $price * $row['quantity'] ?></td>
                                     </tr>
                                     
                                     <tr>
-                                        <th>Address:</th>
+                                        <th>လိပ်စာ :</th>
                                         <td colspan="2"><?php echo htmlspecialchars($row['address']); ?></td>
                                     </tr>
                                     
                                     <tr>
-                                        <th>Order Date:</th>
+                                        <th>အော်ဒါမှာသောရက်စွဲ :</th>
                                         <td colspan="2"><?php echo htmlspecialchars($row['date']); ?></td>
                                     </tr>
                                     
                                     <tr>
-                                        <th>Status:</th>
+                                        <th>မှာယူမှု အခြေအနေ:</th>
                                         <td colspan="2">
                                             <?php 
                                             $status = $row['status'];
-                                            if($status == "" || $status == "NULL") {
-                                                echo '<span class="badge bg-info"><i class="fas fa-bars"></i> Dispatch</span>';
-                                            } elseif($status == "in process") {
-                                                echo '<span class="badge bg-warning"><i class="fas fa-truck"></i> On The Way</span>';
-                                            } elseif($status == "closed") {
-                                                echo '<span class="badge bg-success text-white"><i class="fas fa-check-circle"></i> Delivered</span>';
-                                            } elseif($status == "rejected") {
-                                                echo '<span class="badge bg-danger text-white"><i class="fas fa-times"></i> Cancelled</span>';
+                                            if($status == "Pending") {
+                                                echo '<span class="badge bg-warning"><i class="fas fa-truck"></i> စောင့်ဆိုင်းဆဲ</span>';
+                                            } elseif($status == "Approved") {
+                                                echo '<span class="badge bg-success text-white"><i class="fas fa-check-circle"></i> အတည်ပြုပြီး</span>';
+                                            } elseif($status == "Rejected") {
+                                                echo '<span class="badge bg-danger text-white"><i class="fas fa-times"></i> မအောင်မြင်ပါ</span>';
                                             }
                                             ?>
                                         </td>

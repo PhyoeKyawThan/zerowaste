@@ -43,12 +43,12 @@ include 'parts/start.php';
             'query' => 'SELECT * FROM res_category'
         ],
         [
-            'title' => 'Delivered Orders',
+            'title' => 'Approved Orders',
             'icon' => 'fa-check',
-            'query' => "SELECT * FROM users_claims WHERE status = 'Delivered'"
+            'query' => "SELECT * FROM users_claims WHERE status = 'Approved'"
         ],
         [
-            'title' => 'Cancelled Orders',
+            'title' => 'Rejected Orders',
             'icon' => 'fa-times',
             'query' => "SELECT * FROM users_claims WHERE status = 'Rejected'"
         ],
@@ -82,7 +82,7 @@ include 'parts/start.php';
 <?php
 
 $open_claims_query = "SELECT COUNT(*) AS open_count FROM users_claims WHERE status = 'Pending'";
-$closed_claims_query = "SELECT COUNT(*) AS closed_count FROM users_claims WHERE status = 'Delivered'";
+$closed_claims_query = "SELECT COUNT(*) AS closed_count FROM users_claims WHERE status = 'Approved'";
 $rejected_claims_query = "SELECT COUNT(*) AS rejected_count FROM users_claims WHERE status = 'Rejected'";
 
 $open_result = mysqli_query($db, $open_claims_query);
@@ -97,7 +97,7 @@ $rejected_count = mysqli_fetch_assoc($rejected_result)['rejected_count'];
 <script>
     const ctx = document.getElementById('claimsPieChart');
     const claimsData = {
-        labels: ['Pending', 'Delivered', 'Rejected'],
+        labels: ['Pending', 'Approved', 'Rejected'],
         datasets: [{
             label: 'Claim Status',
             data: [<?php echo $open_count; ?>, <?php echo $closed_count; ?>, <?php echo $rejected_count; ?>],

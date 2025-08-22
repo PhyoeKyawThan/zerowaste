@@ -6,7 +6,7 @@ include 'parts/start.php';
 <div class="page-wrapper">
     <section class="restaurants-page p-2">
         <div class="container">
-            <h2 class="mb-4">My Claim Requests</h2>
+            <h2 class="mb-4">အော်ဒါ၏ အသေးစိတ်အချက်အလက်များ</h2>
 
             <div class="table-responsive">
                 <?php
@@ -22,14 +22,14 @@ include 'parts/start.php';
                 <table class="table table-bordered table-hover">
                     <thead class="bg-white text-white">
                         <tr>
-                            <th class="text-primary">Restaurant</th>
-                            <th class="text-primary">Item</th>
-                            <th class="text-primary">Quantity</th>
-                            <th class="text-primary">Status</th>
-                            <th class="text-primary">Pickup Time</th>
-                            <th class="text-primary d-none d-md-table-cell">Date</th>
-                            <th class="text-primary d-none d-lg-table-cell">Restaurant Address</th>
-                            <th class="text-primary">Actions</th>
+                            <th class="text-primary">ဆိုင်နာမည်</th>
+                            <th class="text-primary">အစားအသောက်</th>
+                            <th class="text-primary">အရေအတွက်</th>
+                            <th class="text-primary">အော်ဒါ အခြေအနေ </th>
+                            <th class="text-primary">အော်ဒါလာယူရန်အချိန်</th>
+                            <th class="text-primary d-none d-md-table-cell">ရက်စွဲ</th>
+                            <th class="text-primary d-none d-lg-table-cell">ဆိုင် လိပ်စာ </th>
+                            <th class="text-primary">ဆိုင်မှ လုပ်ဆောင်ချက်</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -42,19 +42,19 @@ include 'parts/start.php';
                         LEFT JOIN remark ON remark.users_claims_id = users_claims.id
                         WHERE u_id = '" . $_SESSION['user_id'] . "' ORDER BY users_claims.id DESC");
                         if (mysqli_num_rows($query_res) == 0) {
-                            echo '<tr><td colspan="8" class="text-center">You have no orders placed yet.</td></tr>';
+                            echo '<tr><td colspan="8" class="text-center">သင့်တွင် အော်ဒါများ မတင်ရသေးပါ။</td></tr>';
                         } else {
                             while ($row = mysqli_fetch_assoc($query_res)) {
                                 $status = $row['status'];
                                 $statusBtn = '';
                                 if ($status == "Pending" || $status == null) {
-                                    $statusBtn = '<span class="badge p-1 rounded bg-warning text-white"><i class="fa fa-cog fa-spin"></i> Pending</span>';
-                                } elseif ($status == "Delivered") {
-                                    $statusBtn = '<span class="badge p-1 rounded bg-success text-white"><i class="fa fa-check-circle"></i> Delivered</span>';
+                                    $statusBtn = '<span class="badge p-1 rounded bg-warning text-white" style="display: block; width: 150px;"><i class="fa fa-cog fa-spin"></i> စောင့်ဆိုင်းဆဲ</span>';
+                                } elseif ($status == "Approved") {
+                                    $statusBtn = '<span class="badge p-1 rounded bg-success text-white" style="display: block; width: 150px;"><i class="fa fa-check-circle"></i> အတည်ပြုပြီး</span>';
                                 } elseif ($status == "Rejected") {
-                                    $statusBtn = '<span class="badge p-1 rounded bg-danger text-white"><i class="fa fa-close"></i> Cancelled</span>';
+                                    $statusBtn = '<span class="badge p-1 rounded bg-danger text-white" style="display: block; width: 150px;"><i class="fa fa-close"></i> မအောင်မြင်ပါ</span>';
                                 }
-                                $remark = $row['remark'] ?? 'Not viewed yet';
+                                $remark = $row['remark'] ?? 'Not viewd yet';
                                 echo '<tr>
                                     <td data-label="Restaurant">' . htmlspecialchars($row['res_title']) . '</td>
                                     <td data-label="Item">' . htmlspecialchars($row['title']) . '</td>
@@ -82,7 +82,7 @@ include 'parts/start.php';
                                               </div>
                                             </div>
                                         </div>
-                                        <a href="claims.php?action=delete&id=' . intval($row['id']) . '" onclick="return confirm(\'Are you sure you want to cancel your order?\');" class="btn btn-danger rounded">
+                                        <a href="claims.php?action=delete&id=' . intval($row['id']) . '" onclick="return confirm(\'သင့်မှာယူမှုကို ပယ်ဖျက်လိုသည်မှာ သေချာပါသလား?\');" class="btn btn-danger rounded">
                                             <i class="fa fa-trash"></i>
                                         </a>
                                     </td>

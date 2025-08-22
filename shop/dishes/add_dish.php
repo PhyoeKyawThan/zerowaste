@@ -59,39 +59,39 @@ if (isset($_POST['submit'])) {
 <form action="" method="post" enctype="multipart/form-data" style="padding: 20px">
     <a href="shop.php?p=dishes" class="d-block mb-1 mt-1"><i class="fas fa-arrow-left"></i></a>
     <div class="form-body">
-        <h4>Add New Menu Item</h4>
+        <h4>မီနူးအသစ် ထည့်မည်</h4>
         <hr>
 
         <div class="mb-3">
-            <label for="d_name" class="form-label">Dish Name</label>
+            <label for="d_name" class="form-label">အစားအသောက်နာမည်</label>
             <input type="text" id="d_name" name="d_name" class="form-control" required>
         </div>
 
         <div class="mb-3">
-            <label for="about" class="form-label">Description</label>
+            <label for="about" class="form-label">ဖော်ပြချက်</label>
             <input type="text" id="about" name="about" class="form-control" required>
         </div>
 
         <div class="mb-3">
-            <label for="stock" class="form-label">Stock</label>
+            <label for="stock" class="form-label">အစားအသောက်စာရင်း</label>
             <input type="number" id="stock" name="stock" class="form-control" required>
         </div>
 
         <div class="mb-3">
-            <label for="price" class="form-label">Price</label>
+            <label for="price" class="form-label">စျေးနှုန်း</label>
             <input type="number" id="price" name="price" class="form-control" required>
         </div>
 
         <div class="mb-3">
-            <label for="discount" class="form-label">Discount</label>
+            <label for="discount" class="form-label">လျှော့စျေး (%)</label>
             <input type="number" id="discount" name="discount" class="form-control" required>
         </div>
 
         <div class="mb-3">
-            <label for="file" class="form-label">Dish Image</label>
+            <label for="file" class="form-label">အစားအသောက် ဓါတ်ပုံ</label>
             <input type="file" id="file" name="file" class="form-control" accept="image/*" required>
         </div>
-        <button type="submit" name="submit" class="btn btn-primary">Save</button>
-        <a href="add_menu.php" class="btn btn-secondary">Cancel</a>
+        <button type="submit" name="submit" class="btn btn-primary">သိမ်းမည်</button>
+        <a href="add_menu.php" class="btn btn-secondary">ပယ်ဖျက်ပါ။</a>
     </div>
 </form>

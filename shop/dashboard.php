@@ -77,17 +77,17 @@
     <div class="overviews">
         <div class="item dishes">
             <h1><i class="fas fa-utensils"></i></h1>
-            <h5>Dishes</h5>
+            <h5>အစားအသောက်များ</h5>
             <h4><?= $total_dishes ?></h4>
         </div>
         <div class="item claims">
             <h1><i class="fas fa-inbox"></i></h1>
-            <h5>Total Claims</h5>
+            <h5>စုစုပေါင်း အော်ဒါများ</h5>
             <h4><?= $total_claims ?></h4>
         </div>
         <div class="item pending">
             <h1><i class="fas fa-spinner fa-spin"></i></h1>
-            <h5>Pending Claims</h5>
+            <h5>စောင့်‌ဆိုင်းနေဆဲ အော်ဒါများ</h5>
             <h4><?= $pending_claims ?></h4>
         </div>
     </div>
@@ -97,21 +97,21 @@
             <div class="col-12">
                 <div class="card border-0 shadow-sm">
                     <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">Recent Claims</h5>
-                        <a href="?action=claims" class="btn btn-sm btn-outline-secondary">View All</a>
+                        <h5 class="mb-0">လတ်တလော အော်ဒါများ</h5>
+                        <a href="?action=claims" class="btn btn-sm btn-outline-secondary">ကြည့်ရှုရန်</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-hover align-middle">
                                 <thead class="table-light">
                                     <tr>
-                                        <th>Claim ID</th>
-                                        <th>Customer</th>
-                                        <th>Dish</th>
-                                        <th>Quantity</th>
-                                        <th>Status</th>
-                                        <th>Date</th>
-                                        <th>Action</th>
+                                        <th>အော်ဒါ အမှတ်စဉ်</th>
+                                        <th>စားသုံးသူ</th>
+                                        <th>အစားအသောက်</th>
+                                        <th>အရေအတွက်</th>
+                                        <th>အော်ဒါ အခြေအနေ</th>
+                                        <th>ရက်စွဲ</th>
+                                        <th>လုပ်ဆောင်ချက်</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -131,13 +131,13 @@
                                             
                                             if($claim['status'] == "" || $claim['status'] == "Pending") {
                                                 $status_class = 'warning text-dark';
-                                                $status_text = 'Pending';
-                                            } elseif($claim['status'] == "Delivered") {
+                                                $status_text = 'စောင့်ဆိုင်းဆဲ';
+                                            } elseif($claim['status'] == "Approved") {
                                                 $status_class = 'success';
-                                                $status_text = 'Delivered';
+                                                $status_text = 'အတည်ပြုပြီး';
                                             } elseif($claim['status'] == "Rejected") {
                                                 $status_class = 'danger';
-                                                $status_text = 'Cancelled';
+                                                $status_text = 'မအောင်မြင်ပါ';
                                             }
                                             ?>
                                             <tr>
@@ -149,7 +149,7 @@
                                                 <td><?= date('M j, Y g:i A', strtotime($claim['date'])) ?></td>
                                                 <td>
                                                     <div class="d-flex gap-2">
-                                                        <a href="?p=claims&action=edit&id=<?= $claim['id'] ?>" class="btn btn-sm btn-outline-primary">View</a>
+                                                        <a href="?p=claims&action=edit&id=<?= $claim['id'] ?>" class="btn btn-sm btn-outline-primary">ကြည့်ရှုရန်</a>
                                                         <?php //if($claim['status'] != 'closed' && $claim['status'] != 'rejected'): ?>
                                                             <!-- <a href="?action=resolve&id=<?= $claim['id'] ?>" class="btn btn-sm btn-outline-success">Resolve</a> -->
                                                         <?php //endif; ?>
@@ -159,7 +159,7 @@
                                             <?php
                                         }
                                     } else {
-                                        echo '<tr><td colspan="7" class="text-center py-4">No recent claims found</td></tr>';
+                                        echo '<tr><td colspan="7" class="text-center py-4">လတ်တလော အော်ဒါများ မရှိပါ</td></tr>';
                                     }
                                     ?>
                                 </tbody>
@@ -221,7 +221,7 @@
                         <?php
                     }
                 } else {
-                    echo '<div class="text-center py-4">No recent claims found</div>';
+                    echo '<div class="text-center py-4">လတ်တလော အော်ဒါများ မရှိပါ။</div>';
                 }
                 ?>
             </div>

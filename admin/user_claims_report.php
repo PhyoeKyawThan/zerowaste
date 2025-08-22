@@ -1,3 +1,5 @@
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <?php
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -11,6 +13,8 @@ $query = mysqli_query($db, "
     SELECT 
         uc.*,
         dishes.title,
+        dishes.price,
+        dishes.discount,
         res.rs_id, res.title as rs_title,
         users.username
     FROM users_claims as uc 
@@ -25,7 +29,7 @@ $query = mysqli_query($db, "
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2 class="text-primary">Monthly User Claims Report - <?= $month ?>/<?= $year ?></h2>
-        <button onclick="window.print()" class="btn btn-secondary">
+        <button onclick="downloadTwoPagePdf()" class="btn btn-secondary">
             <i class="fa fa-print"></i> Print Report
         </button>
     </div>
@@ -60,8 +64,8 @@ $query = mysqli_query($db, "
         </div>
     </form>
 
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped table-hover align-middle">
+    <div class="w-100 table-responsive" id="print-area">
+        <table class="w-100 table table-bordered table-striped table-hover align-middle">
             <thead class="table-dark">
                 <tr>
                     <th>#</th>
@@ -69,6 +73,8 @@ $query = mysqli_query($db, "
                     <th>Restaurant</th>
                     <th>Dish</th>
                     <th>Qty</th>
+                    <th>Price</th>
+                    <th>Discount (%)</th>
                     <th>Status</th>
                     <th>Date</th>
                 </tr>
@@ -83,17 +89,64 @@ $query = mysqli_query($db, "
                         <td>" . htmlspecialchars($row['rs_title']) . "</td>
                         <td>" . htmlspecialchars($row['title']) . "</td>
                         <td>" . htmlspecialchars($row['quantity']) . "</td>
+                        <td>" . htmlspecialchars($row['price']) . "</td>
+                        <td>" . htmlspecialchars($row['discount']) . "</td>
                         <td>" . htmlspecialchars($row['status']) . "</td>
                         <td>" . htmlspecialchars($row['date']) . "</td>
                     </tr>";
                     $i++;
                 }
                 ?>
+                <tr>
+                    <td></td>
+                </tr>
             </tbody>
         </table>
     </div>
 </div>
+ <script>
+        window.jsPDF = window.jspdf.jsPDF;
 
+        function downloadTwoPagePdf() {
+            const pages = document.querySelectorAll('#print-area');
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const totalPages = pages.length;
+
+            let currentPage = 0;
+
+            const processPage = (pageElement) => {
+                return new Promise(resolve => {
+                    html2canvas(pageElement, { scale: 2 }).then(canvas => {
+                        const imgData = canvas.toDataURL('image/png');
+                        const imgWidth = 210;
+                        const pageHeight = 297;
+                        const imgHeight = canvas.height * imgWidth / canvas.width;
+
+                        const margin = 10;
+                        const contentWidth = imgWidth - (2 * margin);
+                        const contentHeight = imgHeight - (2 * margin);
+
+                        pdf.addImage(imgData, 'PNG', margin, margin, contentWidth, contentHeight);
+
+                        currentPage++;
+                        if (currentPage < totalPages) {
+                            pdf.addPage();
+                        }
+                        resolve();
+                    });
+                });
+            };
+            let promise = Promise.resolve();
+            pages.forEach(page => {
+                promise = promise.then(() => processPage(page));
+            });
+
+            promise.then(() => {
+                pdf.save("report.pdf");
+            });
+        }
+    </script>
 <style>
     @media print {
     nav, .navbar, header, .sidebar, .topbar {
@@ -106,6 +159,7 @@ $query = mysqli_query($db, "
         text-align: center;
     }
     table {
+        width: 100vh !important;
         border-collapse: collapse !important;
     }
 }

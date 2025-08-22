@@ -69,19 +69,19 @@
                         <div class="nav-buttons">
                             <a href="?p=dashboard"
                                 class="nav-btn rounded <?= ($_GET['p'] ?? 'dashboard') == 'dashboard' ? 'active' : '' ?>">
-                                <i class="fas fa-tachometer-alt"></i> Dashboard
+                                <i class="fas fa-tachometer-alt"></i> ထိန်းချုပ်ဘုတ်
                             </a>
                             <a href="?p=dishes"
                                 class="nav-btn rounded <?= ($_GET['p'] ?? '') == 'dishes' ? 'active' : '' ?>">
-                                <i class="fas fa-utensils"></i> Dishes
+                                <i class="fas fa-utensils"></i> အစားအသောက်များ 
                             </a>
                             <a href="?p=claims"
                                 class="nav-btn rounded <?= ($_GET['p'] ?? '') == 'claims' ? 'active' : '' ?>">
-                                <i class="fas fa-inbox"></i> User Claims
+                                <i class="fas fa-inbox"></i> စားသုံးသူ၏ အော်ဒါများ
                             </a>
                             <a href="?p=my"
                                 class="nav-btn rounded <?= ($_GET['p'] ?? '') == 'my' ? 'active' : '' ?>">
-                                <i class="fas fa-store"></i> My Shop
+                                <i class="fas fa-store"></i> မိမိ ဆိုင်
                             </a>
                         </div>
                     </div>

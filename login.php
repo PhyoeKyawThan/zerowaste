@@ -4,6 +4,7 @@ error_reporting(0);
 include("connection/connect.php");
 
 if (isset($_POST['submit'])) {
+    
     $username = $_POST['username'];
     $password = $_POST['password'];
 
@@ -30,13 +31,13 @@ if (isset($_POST['submit'])) {
                 }
                 exit();
             }else{
-                $message = "Your Account is under approval of our Admin.";
+                $message = "သင့်အကောင့်ကို အက်မင်အတည်ပြုနေဆဲဖြစ်သည်";
             }
         } else {
-            $message = "Invalid Username or Password!";
+            $message = "အကောင့်အမည် သို့မဟုတ် စကားဝှက် မမှန်ကန်ပါ!";
         }
     } else {
-        $message = "Please enter both username and password.";
+        $message = "ကျေးဇူးပြု၍ အကောင့်အမည်နှင့် စကားဝှက်နှစ်ခုစလုံးကို ထည့်သွင်းပါ။";
     }
 }
 
@@ -46,7 +47,7 @@ include 'parts/start.php';
 
 <style>
     body {
-        background-image: url('images/img/pimg.jpg');
+        background-image: url('images/img/bg2.jpg');
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
@@ -157,7 +158,7 @@ include 'parts/start.php';
         <div class="row justify-content-center">
             <div class="col-12">
                 <div class="login-container">
-                    <h2 class="page-title">Login to Your Account</h2>
+                    <h2 class="page-title">သင့်အကောင့်သို့ ဝင်ရောက်ပါ။</h2>
                     <?= isset($_GET['msg']) ? urldecode($_GET['msg']) : '' ?>
                     <?php if (isset($message)) { ?>
                         <div class="error-message"><?php echo $message; ?></div>
@@ -169,18 +170,18 @@ include 'parts/start.php';
 
                     <form action="" method="post">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="username" placeholder="Username" required>
+                            <input type="text" class="form-control" name="username" placeholder="အကောင့်အမည်" required>
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" name="password" placeholder="Password" required>
+                            <input type="password" class="form-control" name="password" placeholder="စကားဝှက်" required>
                         </div>
                         <div class="form-group">
                             <button type="submit" name="submit" class="btn btn-login">
-                                <i class="fa fa-sign-in"></i> Login
+                                <i class="fa fa-sign-in"></i>အကောင့်ဝင်ရန်
                             </button>
                         </div>
                         <div class="register-link">
-                            Not registered? <a href="registration.php">Create an account</a>
+                            စာရင်းမသွင်းသေးဘူးလား? <a href="registration.php">အကောင့်ကိုဖန်တီးပါ</a>
                         </div>
                     </form>
                 </div>

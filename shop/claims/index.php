@@ -53,13 +53,13 @@ if (isset($_GET['action']) && $_GET['action'] == 'edit') {
                         <td>' . $rows['title'] . '</td>
                         <td>' . $rows['quantity'] . '</td>';
                         $status = $rows['status'];
-
+                        echo $status;
                         if ($status == "Pending") {
                             echo '<td><button type="button" class="btn btn-warning"><span class="fa fa-cog fa-spin"></span> Pending</button></td>';
-                        } elseif ($status == "Delivered") {
-                            echo '<td><button type="button" class="btn btn-primary"><span class="fa fa-check-circle"></span> Delivered</button></td>';
+                        } elseif ($status == "Approved") {
+                            echo '<td><button type="button" class="btn btn-primary"><span class="fa fa-check-circle"></span> Approved</button></td>';
                         } elseif ($status == "Rejected") {
-                            echo '<td><button type="button" class="btn btn-danger"><i class="fa fa-close"></i> Cancelled</button></td>';
+                            echo '<td><button type="button" class="btn btn-danger"><i class="fa fa-close"></i> Rejected</button></td>';
                         }
 
                         echo '<td>' . $rows['date'] . '</td>

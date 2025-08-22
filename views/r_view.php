@@ -198,9 +198,9 @@ else:
             <div class="top-links">
                 <div class="container">
                     <ul class="row links">
-                        <li class="col-xs-12 col-sm-4 link-item"><span>1</span><a href="restaurants.php">Choose Shop</a></li>
-                        <li class="col-xs-12 col-sm-4 link-item active"><span>2</span>Pick Your food</li>
-                        <li class="col-xs-12 col-sm-4 link-item"><span>3</span><a href="#">Reserve & Claim</a></li>
+                        <li class="col-xs-12 col-sm-4 link-item"><span>1</span><a href="restaurants.php">ဆိုင်ကို ရွေးပါ</a></li>
+                        <li class="col-xs-12 col-sm-4 link-item active"><span>2</span>အစားအသောက်ကို ရွေးပါ</li>
+                        <li class="col-xs-12 col-sm-4 link-item"><span>3</span><a href="#">အော်ဒါတင်၍  ဆိုင်တွင် သွားယူပါ</a></li>
                     </ul>
                 </div>
             </div>
@@ -218,10 +218,10 @@ else:
                         <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 profile-desc">
                             <div class="pull-left right-text white-txt">
                                 <h6><a href="#"><?php echo htmlspecialchars($rows['title']); ?></a></h6>
-                                <p><b>Address: </b><?php echo nl2br(htmlspecialchars($rows['address'])); ?></p>
-                                <p><b>Phone: </b><?= htmlspecialchars($rows['phone']) ?></p>
-                                <p><b>Opening Time: </b><?= htmlspecialchars($rows['o_hr'] . ' - ' . $rows['c_hr']) ?></p>
-                                <p><b>Website: </b><?php
+                                <p><b>လိပ်စာ: </b><?php echo nl2br(htmlspecialchars($rows['address'])); ?></p>
+                                <p><b>ဖုန်းနံပါတ်: </b><?= htmlspecialchars($rows['phone']) ?></p>
+                                <p><b>ဆိုင်ဖွင့်ချိန်: </b><?= htmlspecialchars($rows['o_hr'] . ' - ' . $rows['c_hr']) ?></p>
+                                <p><b>Facebook စာမျက်နှာ: </b><?php
                                 $url = $rows['url'];
                                 $headers = @get_headers($url);
                                 if ($headers && strpos($headers[0], '200') !== false) {
@@ -246,7 +246,7 @@ else:
                 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3" <?= isset($_SESSION['rs_id']) ? 'style="display: none;"' : '' ?>>
                     <div class="widget widget-cart" id="mobile-cart">
                         <div class="widget-heading">
-                            <h3 class="widget-title text-dark">Your Cart</h3>
+                            <h3 class="widget-title text-dark">သင့် ဈေးခြင်းတောင်း</h3>
                             <div class="clearfix"></div>
                         </div>
 
@@ -284,7 +284,7 @@ else:
                                         <?php
                                     }
                                 } else {
-                                    echo "<p>Your cart is empty.</p>";
+                                    echo "<p>သင့် ဈေးခြင်းတောင်းတွင် ဘာမှမရှိပါ</p>";
                                 }
                                 ?>
                             </div>
@@ -292,15 +292,15 @@ else:
 
                         <div class="widget-body">
                             <div class="price-wrap text-xs-center">
-                                <p>TOTAL CLAIM FOOD</p>
-                                <h4 class="value"><strong><?php echo 'Total Dishes - '.$item_total; echo '<br>Total Price - '.$total_price ?></strong></h4>
+                                <p>စုစုပေါင်း မှာယူမှု</p>
+                                <h4 class="value"><strong><?php echo '‌အရေအတွက် - '.$item_total; echo '<br>စုစုပေါင်း စျေးနှုန်း - '.$total_price ?></strong></h4>
 
                                 <?php if ($item_total == 0) { ?>
                                     <a href="restaurants.php?res_id=<?php echo intval($_GET['res_id']); ?>&action=confirm"
-                                        class="btn btn-danger btn-lg disabled btn-block">Claim Now</a>
+                                        class="btn btn-danger btn-lg disabled btn-block">မှာယူမည်</a>
                                 <?php } else { ?>
                                     <a href="restaurants.php?res_id=<?php echo intval($_GET['res_id']); ?>&action=confirm"
-                                        class="btn btn-success btn-lg active btn-block">Claim Now</a>
+                                        class="btn btn-success btn-lg active btn-block">မှာယူမည်</a>
                                 <?php } ?>
                             </div>
                         </div>
@@ -311,7 +311,7 @@ else:
                     <div class="menu-widget" id="2">
                         <div class="widget-heading">
                             <h3 class="widget-title text-dark">
-                                MENU
+                               မီနူး
                                 <a class="btn btn-link pull-right" data-toggle="collapse" href="#popular2"
                                     aria-expanded="true">
                                     <i class="fa fa-angle-right pull-right"></i>
@@ -354,14 +354,14 @@ else:
                                                     <span class="price pull-left"
                                                         id="s-<?= $product['d_id'] ?>"><?php echo "Stock: " . htmlspecialchars($product['stock']); ?></span>
                                                     <input class="b-r-0" type="number" name="quantity"
-                                                        id="d-<?= $product['d_id'] ?>" min="1" max="<?= $product['stock'] ?>"
+                                                        id="d-<?= $product['d_id'] ?>" min="1" max="<?= round($product['stock'] / 2) ?>"
                                                         value="1"
                                                         style="width:60px; <?= isset($_SESSION['rs_id']) ? "display: none;" : '' ?>" />
 
                                                     <button type="button" class="btn theme-btn"
                                                         style="<?= isset($_SESSION['rs_id']) ? "display: none;" : '' ?>"
                                                         onclick="addToCart(<?= $product['d_id'] ?>)">
-                                                        Add To Cart
+                                                        ဈေးခြင်းတောင်းထဲ ထည့်မည်
                                                     </button>
                                                 </div>
                                             </form>
@@ -371,7 +371,7 @@ else:
                                     <?php
                                 }
                             } else {
-                                echo "<p>No dishes available.</p>";
+                                echo "<p>အစားအသောက်များ မရရှိနိုင်ပါ</p>";
                             }
                             ?>
                         </div>
@@ -396,7 +396,7 @@ else:
             let stockElement = document.getElementById(`s-${productId}`);
             let stockText = stockElement.textContent.trim();
             let stock = parseInt(stockText.replace("Stock:", "").trim());
-
+            stock = Math.round(stock / 2);
             if (quantity.value > stock) {
                 alert("Max Stock is " + stock);
                 return;

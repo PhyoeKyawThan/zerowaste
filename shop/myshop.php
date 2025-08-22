@@ -128,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         <div class="row p-t-20">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label class="control-label">Restaurant Name</label>
+                    <label class="control-label">ဆိုင်နာမည်</label>
                     <input type="text" name="res_name" class="form-control" required
                         value="<?= htmlspecialchars($shop['title'] ?? '') ?>">
                 </div>
@@ -136,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
 
             <div class="col-md-6">
                 <div class="form-group has-danger">
-                    <label class="control-label">Business E-mail</label>
+                    <label class="control-label">အီးမေးလ်လိပ်စာ</label>
                     <input type="email" name="email" class="form-control" required
                         value="<?= htmlspecialchars($shop['email'] ?? '') ?>">
                 </div>
@@ -146,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         <div class="row p-t-20">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label class="control-label">Phone</label>
+                    <label class="control-label">ဖုန်းနံပါတ်</label>
                     <input type="text" name="phone" class="form-control" required
                         value="<?= htmlspecialchars($shop['phone'] ?? '') ?>">
                 </div>
@@ -154,7 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
 
             <div class="col-md-6">
                 <div class="form-group has-danger">
-                    <label class="control-label">Website URL</label>
+                    <label class="control-label">Facebook စာမျက်နှာ</label>
                     <input type="text" name="url" class="form-control form-control-danger"
                         value="<?= htmlspecialchars($shop['url'] ?? '') ?>">
                 </div>
@@ -164,9 +164,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label class="control-label">Open Hours</label>
+                    <label class="control-label">ဆိုင်ဖွင့်ချိန်</label>
                     <select name="o_hr" class="form-control custom-select" required>
-                        <option disabled <?= empty($shop['o_hr']) ? 'selected' : '' ?>>--Select your Hours--</option>
+                        <option disabled <?= empty($shop['o_hr']) ? 'selected' : '' ?>>--ဆိုင်ဖွင့်ချိန်ကို ရွေးချယ်ပါ--</option>
                         <?php
                         $hours_open = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm'];
                         foreach ($hours_open as $hour) {
@@ -180,9 +180,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
 
             <div class="col-md-6">
                 <div class="form-group">
-                    <label class="control-label">Close Hours</label>
+                    <label class="control-label">ဆိုင်ပိတ်ချိန်</label>
                     <select name="c_hr" class="form-control custom-select" required>
-                        <option disabled <?= empty($shop['c_hr']) ? 'selected' : '' ?>>--Select your Hours--</option>
+                        <option disabled <?= empty($shop['c_hr']) ? 'selected' : '' ?>>--ဆိုင်ပိတ်ချိန်ကို ရွေးချယ်ပါ--</option>
                         <?php
                         $hours_close = ['3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm', '10pm', '11pm', '12am', '1am', '2am', '3am'];
                         foreach ($hours_close as $hour) {
@@ -196,9 +196,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
 
             <div class="col-md-6">
                 <div class="form-group">
-                    <label class="control-label">Open Days</label>
+                    <label class="control-label">ဆိုင်ဖွင့်ရက်များ</label>
                     <select name="o_days" class="form-control custom-select" required>
-                        <option disabled <?= empty($shop['o_days']) ? 'selected' : '' ?>>--Select your Days--</option>
+                        <option disabled <?= empty($shop['o_days']) ? 'selected' : '' ?>>--ဆိုင်ဖွင့်ရက်များကို ရွေးချယ်ပါ--</option>
                         <?php
                         $days_options = ['Mon-Tue', 'Mon-Wed', 'Mon-Thu', 'Mon-Fri', 'Mon-Sat', '24hr-x7'];
                         foreach ($days_options as $days) {
@@ -212,7 +212,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
 
             <div class="col-md-6">
                 <div class="form-group has-danger">
-                    <label class="control-label">Image</label>
+                    <label class="control-label">ဓါတ်ပုံ</label>
                     <input type="file" name="file" class="form-control form-control-danger">
                     <?php if (!empty($shop['image'])): ?>
                         <img src="/zerowaste/uploads/<?= htmlspecialchars($shop['image']) ?>" alt="Current Image"
@@ -221,24 +221,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                 </div>
             </div>
 
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label class="control-label">Select Category</label>
-                    <select name="c_name" class="form-control custom-select" required>
-                        <option disabled <?= empty($shop['c_id']) ? 'selected' : '' ?>>--Select Category--</option>
-                        <?php
-                        $ssql = "SELECT * FROM res_category";
-                        $res = mysqli_query($db, $ssql);
-                        while ($row = mysqli_fetch_array($res)) {
-                            $sel = ($shop['c_id'] ?? '') == $row['c_id'] ? 'selected' : '';
-                            echo '<option value="' . $row['c_id'] . '" ' . $sel . '>' . htmlspecialchars($row['c_name']) . '</option>';
-                        }
-                        ?>
-                    </select>
-                </div>
-            </div>
+           
         </div>
-        <h3 class="box-title m-t-40">Restaurant Address</h3>
+        <h3 class="box-title m-t-40">ဆိုင်လိပ်စာ</h3>
         <hr>
         <div class="row">
             <div class="col-md-12">
@@ -251,6 +236,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     </div>
 
     <div class="form-actions">
-        <input type="submit" name="submit" class="btn btn-primary" value="Save">
+        <input type="submit" name="submit" class="btn btn-primary" value="သိမ်းမည်">
     </div>
 </form>

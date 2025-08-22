@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         include '../../../connection/connect.php';
         $query_str = "INSERT INTO remark(users_claims_id, status, remark) VALUES(?, ?, ?)";
         $update_sts = "UPDATE users_claims SET status = ? WHERE id = ?";
-        if($status == 'Delivered'){
+        if($status == 'Approved'){
              $update_sts = "UPDATE users_claims SET status = ?, pickup_time = '".$pickuptime."' WHERE id = ?";
         }
         $check_qry = "SELECT * FROM remark WHERE users_claims_id = ?";
@@ -81,8 +81,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <select name="status" id="status" class="form-control" required>
                         <option value="" selected disabled>Select Status</option>
                         <option value="Pending">Pending</option>
-                        <option value="Delivered">Delivered</option>
-                        <option value="Rejected">Cancelled</option>
+                        <option value="Approved">Approved</option>
+                        <option value="Rejected">Rejected</option>
                     </select>
                     <div class="invalid-feedback">
                         Please select a status

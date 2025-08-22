@@ -4,6 +4,8 @@ include 'parts/start.php';
 $query = mysqli_query($db, "SELECT 
                                     uc.*,
                                     dishes.title,
+                                    dishes.price,
+                                    dishes.discount,
                                     res.rs_id, res.title as rs_title,
                                     users.username
                                     FROM users_claims as uc 
@@ -55,6 +57,8 @@ if (isset($_GET['del'])) {
                     <th scope="col">Restaurant</th>
                     <th scope="col">Claimed Dish</th>
                     <th scope="col">Qty</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Discount (%)</th>
                     <th scope="col">Status</th>
                     <th scope="col">Claimed Date</th>
                     <!-- <th scope="col">Actions</th> -->
@@ -70,12 +74,14 @@ if (isset($_GET['del'])) {
                     echo '<td><a class="text-decoration-none" href="restaurants.php?res_id='.$row['rs_id'].'">' . htmlspecialchars($row['rs_title']) . '</a></td>';
                     echo '<td>' . htmlspecialchars($row['title']) . '</td>';
                     echo '<td>' . htmlspecialchars($row['quantity']) . '</td>';
+                    echo '<td>' . htmlspecialchars($row['price']) . '</td>';
+                    echo '<td>' . htmlspecialchars($row['discount']) . '</td>';
                     $status = $row['status'];
 
                     if ($status == "Pending") {
                         echo '<td><button type="button" class="btn btn-warning"><span class="fa fa-cog fa-spin"></span> Pending</button></td>';
-                    } elseif ($status == "Delivered") {
-                        echo '<td><button type="button" class="btn btn-primary"><span class="fa fa-check-circle"></span> Delivered</button></td>';
+                    } elseif ($status == "Approved") {
+                        echo '<td><button type="button" class="btn btn-primary"><span class="fa fa-check-circle"></span> Approved</button></td>';
                     } elseif ($status == "Rejected") {
                         echo '<td><button type="button" class="btn btn-danger"><i class="fa fa-close"></i> Cancelled</button></td>';
                     }

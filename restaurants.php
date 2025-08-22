@@ -17,9 +17,9 @@ if (isset($_GET['res_id'])) {
                 <div class="container">
                     <ul class="row links">
 
-                        <li class="col-xs-12 col-sm-4 link-item active"><span>1</span><a href="#">Choose Shop</a></li>
-                        <li class="col-xs-12 col-sm-4 link-item"><span>2</span><a href="#">Pick Your food</a></li>
-                        <li class="col-xs-12 col-sm-4 link-item"><span>3</span><a href="#">Reserve & Claim</a></li>
+                        <li class="col-xs-12 col-sm-4 link-item active"><span>1</span><a href="#">ဆိုင်ကို ရွေးပါ</a></li>
+                        <li class="col-xs-12 col-sm-4 link-item"><span>2</span><a href="#">အစားအသောက်ကို ရွေးပါ</a></li>
+                        <li class="col-xs-12 col-sm-4 link-item"><span>3</span><a href="#">အော်ဒါတင်၍  ဆိုင်တွင် သွားယူပါ</a></li>
                     </ul>
                 </div>
             </div>
@@ -61,7 +61,7 @@ if (isset($_GET['res_id'])) {
 																<div class="right-content bg-white">
 																	<div class="right-review">
 																		
-																		<a href="restaurants.php?res_id=' . $rows['rs_id'] . '" class="btn btn-purple">View Menu</a> </div>
+																		<a href="restaurants.php?res_id=' . $rows['rs_id'] . '" class="btn btn-purple">မီနူးကြည့်ရှုပါ။</a> </div>
 																</div>
 																<!-- end:right info -->
 															</div>';

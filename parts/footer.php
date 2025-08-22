@@ -3,12 +3,12 @@
         <div class="row bottom-footer">
             <div class="col-xs-12 col-sm-4 address color-gray">
                 <h5>Address</h5>
-                <p>1086 Stockert Hollow Road, Seattle</p>
-                <h5>Phone: 75696969855</h5>
+                <p>ICTRC , Hlaing , Yangon</p>
+                <h5>Phone:09951122994</h5>
             </div>
             <div class="col-xs-12 col-sm-5 additional-info color-gray">
                 <h5>Additional Information</h5>
-                <p>Together, we can make zero food waste possible. |<br> © 2025 Zero Waste Food Management System</p>
+                <p>Together, we can make zero food waste possible. |<br> © 2025 Zero Waste Food Ordering And Sharing Platform</p>
             </div>
         </div>
     </div>
