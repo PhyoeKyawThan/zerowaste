@@ -26,13 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $status = trim($_POST['status']);
     $claim_id = (int) $_GET['id'];
     $remark = trim($_POST['remark']);
-    $pickuptime = $_POST['pickup_datetime'];
+    $pickupperiod = $_POST['pickup_period'];
     if ($claim_id && $status) {
         include '../../../connection/connect.php';
         $query_str = "INSERT INTO remark(users_claims_id, status, remark) VALUES(?, ?, ?)";
         $update_sts = "UPDATE users_claims SET status = ? WHERE id = ?";
         if($status == 'Approved'){
-             $update_sts = "UPDATE users_claims SET status = ?, pickup_time = '".$pickuptime."' WHERE id = ?";
+             $update_sts = "UPDATE users_claims SET status = ?, pickup_period = '".$pickupperiod."' WHERE id = ?";
         }
         $check_qry = "SELECT * FROM remark WHERE users_claims_id = ?";
         $update = mysqli_prepare($db, $update_sts);
@@ -82,6 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <option value="" selected disabled>Select Status</option>
                         <option value="Pending">Pending</option>
                         <option value="Approved">Approved</option>
+                        <option value="Finished">Finished</option>
                         <option value="Rejected">Rejected</option>
                     </select>
                     <div class="invalid-feedback">
@@ -91,12 +92,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
 
             <div class="mb-3 row">
-                <label for="pickup_datetime" class="col-md-3 col-form-label fw-bold">Pickup Date & Time</label>
+                <label for="pickup_period" class="col-md-3 col-form-label fw-bold">Pickup Date & Time</label>
                 <div class="col-md-9">
-                    <input type="datetime-local" name="pickup_datetime" id="pickup_datetime" class="form-control"
-                        required>
+                    <!-- <input type="datetime-local" name="pickup_datetime" id="pickup_datetime" class="form-control" -->
+                        <!-- required> -->
+                    <select name="pickup_period" id="pickup_period">
+                        <option value="60">Within 60 Minutes</option>
+                        <option value="30">Within 30 Minutes</option>
+                    </select>
                     <div class="invalid-feedback">
-                        Please select pickup date & time
+                        Please select pickup Period
                     </div>
                 </div>
             </div>

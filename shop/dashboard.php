@@ -72,6 +72,11 @@
     $pending_q = mysqli_query($db, "SELECT COUNT(*) as total FROM users_claims uc JOIN dishes d ON uc.d_id = d.d_id WHERE d.rs_id = '$restaurant_id' AND (uc.status IS NULL OR uc.status = '' OR uc.status = 'in process')");
     $pending_data = mysqli_fetch_assoc($pending_q);
     $pending_claims = $pending_data['total'];
+
+    if(isset($_GET['action']) && $_GET['action'] == 'make_finished'){
+        $id = $_GET['id'];
+        mysqli_query($db, "UPDATE users_claims SET status = 'Finished' WHERE id = $id");
+    }
     ?>
     
     <div class="overviews">
@@ -98,7 +103,7 @@
                 <div class="card border-0 shadow-sm">
                     <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">လတ်တလော အော်ဒါများ</h5>
-                        <a href="?action=claims" class="btn btn-sm btn-outline-secondary">ကြည့်ရှုရန်</a>
+                        <a href="shop.php?p=claims" class="btn btn-sm btn-outline-secondary">ကြည့်ရှုရန်</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -133,9 +138,13 @@
                                                 $status_class = 'warning text-dark';
                                                 $status_text = 'စောင့်ဆိုင်းဆဲ';
                                             } elseif($claim['status'] == "Approved") {
-                                                $status_class = 'success';
+                                                $status_class = 'primary';
                                                 $status_text = 'အတည်ပြုပြီး';
-                                            } elseif($claim['status'] == "Rejected") {
+
+                                            }elseif($claim['status'] == 'Finished'){
+                                                $status_class = 'success';
+                                                $status_text = 'Finished';
+                                            } else {
                                                 $status_class = 'danger';
                                                 $status_text = 'မအောင်မြင်ပါ';
                                             }
@@ -150,9 +159,11 @@
                                                 <td>
                                                     <div class="d-flex gap-2">
                                                         <a href="?p=claims&action=edit&id=<?= $claim['id'] ?>" class="btn btn-sm btn-outline-primary">ကြည့်ရှုရန်</a>
-                                                        <?php //if($claim['status'] != 'closed' && $claim['status'] != 'rejected'): ?>
-                                                            <!-- <a href="?action=resolve&id=<?= $claim['id'] ?>" class="btn btn-sm btn-outline-success">Resolve</a> -->
-                                                        <?php //endif; ?>
+                                                        <?php
+                                                            if($claim['status'] != 'Pending'):
+                                                        ?>
+                                                            <a href="?p=dashboard&action=make_finished&id=<?= $claim['id'] ?>" class="btn btn-sm btn-outline-success"><?= $claim['status'] == 'Approved' ? 'Waiting' : 'Finished' ?></a>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -185,16 +196,13 @@
                         $status_class = '';
                         $status_text = '';
                         
-                        if($claim['status'] == "" || $claim['status'] == "NULL") {
-                            $status_class = 'warning text-dark';
-                            $status_text = 'Pending';
-                        } elseif($claim['status'] == "in process") {
+                        if($claim['status'] == "Pending") {
                             $status_class = 'info';
                             $status_text = 'In Process';
-                        } elseif($claim['status'] == "closed") {
+                        } elseif($claim['status'] == "Approved") {
                             $status_class = 'success';
                             $status_text = 'Completed';
-                        } elseif($claim['status'] == "rejected") {
+                        } elseif($claim['status'] == "Rejected") {
                             $status_class = 'danger';
                             $status_text = 'Rejected';
                         }

@@ -50,10 +50,13 @@ include 'parts/start.php';
                                 if ($status == "Pending" || $status == null) {
                                     $statusBtn = '<span class="badge p-1 rounded bg-warning text-white" style="display: block; width: 150px;"><i class="fa fa-cog fa-spin"></i> စောင့်ဆိုင်းဆဲ</span>';
                                 } elseif ($status == "Approved") {
-                                    $statusBtn = '<span class="badge p-1 rounded bg-success text-white" style="display: block; width: 150px;"><i class="fa fa-check-circle"></i> အတည်ပြုပြီး</span>';
+                                    $statusBtn = '<span class="badge p-1 rounded bg-primary text-white" style="display: block; width: 150px;"><i class="fa fa-check-circle"></i> အတည်ပြုပြီး</span>';
+                                } elseif ($status == 'Finished') {
+                                    $statusBtn = '<span class="badge p-1 rounded bg-success text-white" style="display: block; width: 150px;"><i class="fa fa-check-circle"></i> Finished</span>';
                                 } elseif ($status == "Rejected") {
                                     $statusBtn = '<span class="badge p-1 rounded bg-danger text-white" style="display: block; width: 150px;"><i class="fa fa-close"></i> မအောင်မြင်ပါ</span>';
                                 }
+
                                 $remark = $row['remark'] ?? 'Not viewd yet';
                                 echo '<tr>
                                     <td data-label="Restaurant">' . htmlspecialchars($row['res_title']) . '</td>
@@ -61,24 +64,24 @@ include 'parts/start.php';
                                     <td data-label="Qty">' . intval($row['quantity']) . '</td>
                                     <td class="p-2" data-label="Status">' . $statusBtn . '</td>
                                     
-                                    <td data-label="Pickup">' . htmlspecialchars($row['pickup_time'] ?? ' - ') . '</td>
+                                    <td data-label="Pickup">' . htmlspecialchars($row['pickup_period'] ? 'Within ' . $row['pickup_period'] . ' Minutes' : ' - ') . '</td>
                                     <td class="d-none d-md-table-cell" data-label="Date">' . htmlspecialchars($row['date']) . '</td>
                                     <td class="d-none d-lg-table-cell" data-label="Restaurant Address">' . htmlspecialchars($row['address']) . '</td>
                                     <td data-label="Actions">
-                                        <button type="button" class="btn-primary" onclick="openModal()">
+                                        <button type="button" class="btn-primary" onclick="openModal('.$row['id'].')">
                                             <i class="fas fa-comment"></i> Message
                                         </button>
-                                        <div class="modal-backdrop" id="userMessageModal">
+                                        <div class="modal-backdrop" id="userMessageModal-'.$row['id'].'">
                                             <div class="modal-box">
                                               <div class="modal-header">
                                                 <h5 class="text-white"><i class="fas fa-comment-dots"></i> User Message</h5>
                                                <!--<button class="close-btn" onclick="closeModal()">&times;</button>-->
                                               </div>
                                               <div class="modal-body">
-                                                '.$remark.'
+                                                ' . $remark . '
                                               </div>
                                               <div class="modal-footer">
-                                                <button class="btn-secondary" onclick="closeModal()">OK</button>
+                                                <button class="btn-secondary" onclick="closeModal('.$row['id'].')">OK</button>
                                               </div>
                                             </div>
                                         </div>
@@ -97,17 +100,17 @@ include 'parts/start.php';
     </section>
 </div>
 <script>
-    function openModal() {
-        document.getElementById('userMessageModal').classList.add('active');
+    function openModal(id) {
+        document.getElementById(`userMessageModal-${id}`).classList.add('active');
     }
 
-    function closeModal() {
-        document.getElementById('userMessageModal').classList.remove('active');
+    function closeModal(id) {
+        document.getElementById(`userMessageModal-${id}`).classList.remove('active');
     }
 
-    document.getElementById('userMessageModal').addEventListener('click', function (e) {
-        if (e.target === this) closeModal();
-    });
+    // document.getElementById('userMessageModal').addEventListener('click', function (e) {
+    //     if (e.target === this) closeModal();
+    // });
 </script>
 <style>
     .modal-backdrop {

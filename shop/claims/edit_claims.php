@@ -92,7 +92,9 @@
                                             if($status == "Pending") {
                                                 echo '<span class="badge bg-warning"><i class="fas fa-truck"></i> စောင့်ဆိုင်းဆဲ</span>';
                                             } elseif($status == "Approved") {
-                                                echo '<span class="badge bg-success text-white"><i class="fas fa-check-circle"></i> အတည်ပြုပြီး</span>';
+                                                echo '<span class="badge bg-primary text-white"><i class="fas fa-check-circle"></i> အတည်ပြုပြီး</span>';
+                                            }elseif($status == 'Finished'){
+                                                echo '<span class="badge bg-success text-white"><i class="fas fa-check-circle"></i> Finished</span>';
                                             } elseif($status == "Rejected") {
                                                 echo '<span class="badge bg-danger text-white"><i class="fas fa-times"></i> မအောင်မြင်ပါ</span>';
                                             }

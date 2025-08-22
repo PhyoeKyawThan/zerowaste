@@ -6,7 +6,8 @@
                     <div class="dish-head">
                         <h3 class="dish-title">Dishes</h3>
                         <form action="" method="get" class="dish-search">
-                            <input type="search" name="search" id="search" placeholder="Search..."
+                            <input type="hidden" name="p" value="dishes">
+                            <input type="search" name="search" value="<?= $_GET['search'] ?? '' ?>" id="search" placeholder="Search..."
                                 class="search-input" />
                         </form>
 
@@ -33,6 +34,10 @@
                             }
 
                             $sql = "SELECT * FROM dishes WHERE rs_id = ? ORDER BY d_id DESC";
+                            if(isset($_GET['search'])){
+                                $search = '%'.$_GET['search'].'%';
+                                $sql = "SELECT * FROM dishes WHERE rs_id = ? AND dishes.title LIKE '$search' ORDER BY d_id DESC";
+                            }
                             $query = mysqli_prepare($db, $sql);
                             mysqli_stmt_bind_param($query, 'i', $_SESSION['rs_id']);
                             mysqli_execute($query);
