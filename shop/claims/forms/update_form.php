@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="col-md-9">
                     <!-- <input type="datetime-local" name="pickup_datetime" id="pickup_datetime" class="form-control" -->
                         <!-- required> -->
-                    <select name="pickup_period" id="pickup_period">
+                    <select name="pickup_period" id="pickup_period" class="form-control">
                         <option value="60">Within 60 Minutes</option>
                         <option value="30">Within 30 Minutes</option>
                     </select>

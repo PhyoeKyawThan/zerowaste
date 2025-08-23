@@ -225,7 +225,7 @@ else:
                                 $url = $rows['url'];
                                 $headers = @get_headers($url);
                                 if ($headers && strpos($headers[0], '200') !== false) {
-                                    echo '<a href="' . $rows['url'] . '" class="text-white">' . $rows['url'] . '</a>';
+                                    echo '<a href="' . $rows['url'] . '" class="text-white" style="text-decoration: underline">' . $rows['url'] . '</a>';
                                 } else {
                                     echo '---';
                                 }
@@ -330,7 +330,11 @@ else:
 
                             if ($products->num_rows > 0) {
                                 while ($product = $products->fetch_assoc()) {
-                                    $discounted_price = $product['price'] - ($product['price'] * ($product['discount'] / 100));
+                                    $o_price = $product['price'];
+                                    $discounted_price = $product['discount'] > 0
+                                        ? $product['price'] - ($product['price'] * ($product['discount'] / 100))
+                                        : $product['price'];
+                                    // $discounted_price = $product['price'] - ($product['price'] * ($product['discount'] / 100));
                                     ?>
                                     <div class="food-item">
                                         <div class="row">
@@ -349,7 +353,14 @@ else:
                                                 </div>
                                                 <div class="d-flex flex-direction-col pull-right item-cart-info" id="price-section">
                                                     <span class="price pull-left">Price:
-                                                        <?= number_format($discounted_price, 2) ?></span>
+                                                        <?php
+                                                            if ($product['discount'] > 0) {
+                                        echo '<span style="text-decoration: line-through; color: gray;">' . number_format($o_price, 2) . '</span> 
+              <span style="color: red; font-weight: bold; margin-left: 5px;">' . number_format($discounted_price, 2) . '</span>';
+                                    } else {
+                                        echo number_format($o_price, 2);
+                                    }
+                                                        ?></span>
                                                     <span>Discount: <?= htmlspecialchars($product['discount']) ?>%</span>
                                                     <span class="price pull-left"
                                                         id="s-<?= $product['d_id'] ?>"><?php echo "Stock: " . htmlspecialchars($product['stock']); ?></span>

@@ -16,6 +16,11 @@ if (isset($_GET['action']) && $_GET['action'] == 'edit') {
         }
     }
 
+    if(isset($_GET['action']) && $_GET['action'] == 'make_finished'){
+        $id = $_GET['id'];
+        mysqli_query($db, "UPDATE users_claims SET status = 'Finished' WHERE id = $id");
+    }
+
     $status_filter = isset($_GET['status']) && $_GET['status'] !== '' ? $_GET['status'] : null;
     $date_filter   = isset($_GET['date']) && $_GET['date'] !== '' ? $_GET['date'] : null;
     ?>
@@ -104,6 +109,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'edit') {
                             <td>' . $rows['quantity'] . '</td>';
 
                         $status = $rows['status'];
+                        $c_status = $rows['status'] == 'Approved' ? 'Waiting' : 'Finished';
+                        $make_finished = '<a href="?p=claims&action=make_finished&id='.$rows['claim_id'].'" class="btn btn-success rounded ml-2"> '.$c_status.'</a>';
                         if ($status == "Pending") {
                             echo '<td><button class="btn btn-warning"><span class="fa fa-cog fa-spin"></span> Pending</button></td>';
                         } elseif ($status == "Approved") {
@@ -117,8 +124,11 @@ if (isset($_GET['action']) && $_GET['action'] == 'edit') {
                         echo '<td>' . $rows['date'] . '</td>
                         <td>
                             <a href="' . $_SERVER['REQUEST_URI'] . '&action=delete&id=' . $rows['claim_id'] . '" onclick="return confirm(\'Are you sure?\');" class="btn btn-danger rounded"><i class="fa fa-trash-o"></i></a>
-                            <a href="' . $_SERVER['REQUEST_URI'] . '&action=edit&id=' . $rows['claim_id'] . '" class="btn btn-info rounded m-l-5"><i class="fa fa-edit"></i></a>
-                        </td>
+                            <a href="' . $_SERVER['REQUEST_URI'] . '&action=edit&id=' . $rows['claim_id'] . '" class="btn btn-info rounded m-l-5"><i class="fa fa-edit"></i></a>';
+                            if($status != "Pending" && $status != "Rejected"){
+                                echo $make_finished;
+                            }
+                    echo '</td>
                     </tr>';
                     }
                 }
